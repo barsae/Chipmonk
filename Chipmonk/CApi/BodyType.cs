@@ -1,5 +1,5 @@
 ﻿
-namespace Chipmonk {
+namespace Chipmonk.CApi {
     public enum BodyType {
         DYNAMIC,
         KINEMATIC,

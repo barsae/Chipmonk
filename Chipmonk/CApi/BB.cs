@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chipmonk {
+namespace Chipmonk.CApi {
     public struct BB {
         public double l;
         public double b;

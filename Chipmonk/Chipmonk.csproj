@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyType.cs" />
-    <Compile Include="BB.cs" />
-    <Compile Include="CP.cs" />
-    <Compile Include="Vect.cs" />
+    <Compile Include="CApi\BodyType.cs" />
+    <Compile Include="CApi\BB.cs" />
+    <Compile Include="CApi\CP.cs" />
+    <Compile Include="CApi\Vect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
