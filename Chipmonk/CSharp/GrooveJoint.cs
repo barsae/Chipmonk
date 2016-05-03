@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class GrooveJoint {
         public IntPtr constraint { get; private set; }
 
-        public GrooveJoint(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
+        public GrooveJoint(IntPtr a, IntPtr b, Vect groove_a, Vect groove_b, Vect anchorB) {
             constraint = CP.GrooveJointNew(a, b, groove_a, groove_b, anchorB);
         }
 

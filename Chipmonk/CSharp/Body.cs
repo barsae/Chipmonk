@@ -132,11 +132,11 @@ namespace Chipmonk.CSharp {
 
         // CP_EXPORT cpBody* cpBodyNewKinematic(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewKinematic")]
-        public static extern Body NewKinematic();
+        public static extern IntPtr NewKinematic();
 
         // CP_EXPORT cpBody* cpBodyNewStatic(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewStatic")]
-        public static extern Body NewStatic();
+        public static extern IntPtr NewStatic();
 
         // CP_EXPORT void cpBodySetAngle(cpBody *body, cpFloat a);
         public void SetAngle(double a) {
@@ -199,7 +199,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT void cpBodySleepWithGroup(cpBody *body, cpBody *group);
-        public void SleepWithGroup(Body group) {
+        public void SleepWithGroup(IntPtr group) {
             CP.BodySleepWithGroup(body, group);
         }
 

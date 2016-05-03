@@ -22,7 +22,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT cpBody* cpShapeGetBody(const cpShape *shape);
-        public Body GetBody() {
+        public IntPtr GetBody() {
             return CP.ShapeGetBody(shape);
         }
 
@@ -77,8 +77,8 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT cpFloat cpShapePointQuery(const cpShape *shape, cpVect p, cpPointQueryInfo *out);
-        public double PointQuery(Vect p, IntPtr out) {
-            return CP.ShapePointQuery(shape, p, out);
+        public double PointQuery(Vect p, IntPtr output) {
+            return CP.ShapePointQuery(shape, p, output);
         }
 
         // CP_EXPORT cpBool cpShapeSegmentQuery(const cpShape *shape, cpVect a, cpVect b, cpFloat radius, cpSegmentQueryInfo *info);
@@ -87,7 +87,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT void cpShapeSetBody(cpShape *shape, cpBody *body);
-        public void SetBody(Body body) {
+        public void SetBody(IntPtr body) {
             CP.ShapeSetBody(shape, body);
         }
 

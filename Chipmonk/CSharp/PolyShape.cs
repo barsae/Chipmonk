@@ -23,11 +23,11 @@ namespace Chipmonk.CSharp {
 
         // CP_EXPORT cpPolyShape* cpPolyShapeInitRaw(cpPolyShape *poly, cpBody *body, int count, const cpVect *verts, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpInitRaw")]
-        public static extern IntPtr InitRaw(IntPtr poly, Body body, int count, IntPtr verts, double radius);
+        public static extern IntPtr InitRaw(IntPtr poly, IntPtr body, int count, IntPtr verts, double radius);
 
         // CP_EXPORT cpShape* cpPolyShapeNewRaw(cpBody *body, int count, const cpVect *verts, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewRaw")]
-        public static extern IntPtr NewRaw(Body body, int count, IntPtr verts, double radius);
+        public static extern IntPtr NewRaw(IntPtr body, int count, IntPtr verts, double radius);
 
         // CP_EXPORT void cpPolyShapeSetRadius(cpShape *shape, cpFloat radius);
         public void SetRadius(double radius) {

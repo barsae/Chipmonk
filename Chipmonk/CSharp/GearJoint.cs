@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class GearJoint {
         public IntPtr constraint { get; private set; }
 
-        public GearJoint(Body a, Body b, double phase, double ratio) {
+        public GearJoint(IntPtr a, IntPtr b, double phase, double ratio) {
             constraint = CP.GearJointNew(a, b, phase, ratio);
         }
 

@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class CircleShape {
         public IntPtr shape { get; private set; }
 
-        public CircleShape(Body body, double radius, Vect offset) {
+        public CircleShape(IntPtr body, double radius, Vect offset) {
             shape = CP.CircleShapeNew(body, radius, offset);
         }
 

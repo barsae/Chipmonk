@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class PivotJoint {
         public IntPtr constraint { get; private set; }
 
-        public PivotJoint(Body a, Body b, Vect pivot) {
+        public PivotJoint(IntPtr a, IntPtr b, Vect pivot) {
             constraint = CP.PivotJointNew(a, b, pivot);
         }
 
@@ -22,7 +22,7 @@ namespace Chipmonk.CSharp {
 
         // CP_EXPORT cpConstraint* cpPivotJointNew2(cpBody *a, cpBody *b, cpVect anchorA, cpVect anchorB);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNew2")]
-        public static extern IntPtr New2(Body a, Body b, Vect anchorA, Vect anchorB);
+        public static extern IntPtr New2(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB);
 
         // CP_EXPORT void cpPivotJointSetAnchorA(cpConstraint *constraint, cpVect anchorA);
         public void SetAnchorA(Vect anchorA) {

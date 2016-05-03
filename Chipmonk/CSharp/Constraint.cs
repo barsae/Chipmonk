@@ -7,12 +7,12 @@ namespace Chipmonk.CSharp {
         public IntPtr constraint { get; private set; }
 
         // CP_EXPORT cpBody* cpConstraintGetBodyA(const cpConstraint *constraint);
-        public Body GetBodyA() {
+        public IntPtr GetBodyA() {
             return CP.ConstraintGetBodyA(constraint);
         }
 
         // CP_EXPORT cpBody* cpConstraintGetBodyB(const cpConstraint *constraint);
-        public Body GetBodyB() {
+        public IntPtr GetBodyB() {
             return CP.ConstraintGetBodyB(constraint);
         }
 

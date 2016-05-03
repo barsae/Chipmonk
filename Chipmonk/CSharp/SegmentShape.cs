@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class SegmentShape {
         public IntPtr shape { get; private set; }
 
-        public SegmentShape(Body body, Vect a, Vect b, double radius) {
+        public SegmentShape(IntPtr body, Vect a, Vect b, double radius) {
             shape = CP.SegmentShapeNew(body, a, b, radius);
         }
 

@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class DampedRotarySpring {
         public IntPtr constraint { get; private set; }
 
-        public DampedRotarySpring(Body a, Body b, double restAngle, double stiffness, double damping) {
+        public DampedRotarySpring(IntPtr a, IntPtr b, double restAngle, double stiffness, double damping) {
             constraint = CP.DampedRotarySpringNew(a, b, restAngle, stiffness, damping);
         }
 

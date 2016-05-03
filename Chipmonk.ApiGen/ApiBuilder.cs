@@ -27,7 +27,7 @@ namespace Chipmonk.ApiGen {
                     ReturnType = ConvertType(function.ReturnType),
                     Arguments = function.Arguments
                                         .Select(arg => new Argument() {
-                                            ArgumentName = arg.ArgumentName,
+                                            ArgumentName = GetSafeArgumentName(arg.ArgumentName),
                                             ArgumentType = ConvertType(arg.ArgumentType)
                                         })
                                         .ToList()
@@ -74,8 +74,8 @@ namespace Chipmonk.ApiGen {
             { "cpBB", "BB" },
             { "const cpBB", "BB" },
             { "cpDataPointer", "IntPtr" },
-            { "cpBodyType", "BodyType" },
-            { "cpBody*", "Body" }
+            { "cpBodyType", "BodyType" }
+            //{ "cpBody*", "Body" }
         };
 
         private static string ConvertType(string returnType) {
@@ -88,6 +88,14 @@ namespace Chipmonk.ApiGen {
             } else {
                 throw new SkipExportingFunction("Don't know how to convert type: " + returnType);
             }
+        }
+
+        private static string GetSafeArgumentName(string argumentName) {
+            if (argumentName == "out") {
+                return "output";
+            }
+
+            return argumentName;
         }
     }
 }

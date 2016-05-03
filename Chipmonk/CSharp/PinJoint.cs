@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class PinJoint {
         public IntPtr constraint { get; private set; }
 
-        public PinJoint(Body a, Body b, Vect anchorA, Vect anchorB) {
+        public PinJoint(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB) {
             constraint = CP.PinJointNew(a, b, anchorA, anchorB);
         }
 

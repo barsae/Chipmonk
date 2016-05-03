@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class RatchetJoint {
         public IntPtr constraint { get; private set; }
 
-        public RatchetJoint(Body a, Body b, double phase, double ratchet) {
+        public RatchetJoint(IntPtr a, IntPtr b, double phase, double ratchet) {
             constraint = CP.RatchetJointNew(a, b, phase, ratchet);
         }
 

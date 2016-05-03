@@ -11,8 +11,8 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT cpBody* cpSpaceAddBody(cpSpace *space, cpBody *body);
-        public Body AddBody(Body body) {
-            return new Body(CP.SpaceAddBody(space, body.body));
+        public IntPtr AddBody(IntPtr body) {
+            return CP.SpaceAddBody(space, body);
         }
 
         // CP_EXPORT cpConstraint* cpSpaceAddConstraint(cpSpace *space, cpConstraint *constraint);
@@ -31,7 +31,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT cpBool cpSpaceContainsBody(cpSpace *space, cpBody *body);
-        public bool ContainsBody(Body body) {
+        public bool ContainsBody(IntPtr body) {
             return CP.SpaceContainsBody(space, body);
         }
 
@@ -91,7 +91,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT cpBody* cpSpaceGetStaticBody(const cpSpace *space);
-        public Body GetStaticBody() {
+        public IntPtr GetStaticBody() {
             return CP.SpaceGetStaticBody(space);
         }
 
@@ -119,7 +119,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT void cpSpaceReindexShapesForBody(cpSpace *space, cpBody *body);
-        public void ReindexShapesForBody(Body body) {
+        public void ReindexShapesForBody(IntPtr body) {
             CP.SpaceReindexShapesForBody(space, body);
         }
 
@@ -129,7 +129,7 @@ namespace Chipmonk.CSharp {
         }
 
         // CP_EXPORT void cpSpaceRemoveBody(cpSpace *space, cpBody *body);
-        public void RemoveBody(Body body) {
+        public void RemoveBody(IntPtr body) {
             CP.SpaceRemoveBody(space, body);
         }
 

@@ -6,7 +6,7 @@ namespace Chipmonk.CSharp {
     public class SimpleMotor {
         public IntPtr motor { get; private set; }
 
-        public SimpleMotor(Body a, Body b, double rate) {
+        public SimpleMotor(IntPtr a, IntPtr b, double rate) {
             motor = CP.SimpleMotorNew(a, b, rate);
         }
 
