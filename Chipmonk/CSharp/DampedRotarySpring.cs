@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class DampedRotarySpring {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public DampedRotarySpring(IntPtr a, IntPtr b, double restAngle, double stiffness, double damping) {
             constraint = CP.DampedRotarySpringNew(a, b, restAngle, stiffness, damping);

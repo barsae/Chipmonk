@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Polyline {
-        public IntPtr line { get; private set; }
+        public IntPtr line { get; set; }
 
         // CP_EXPORT cpPolylineSet *cpPolylineConvexDecomposition(cpPolyline *line, cpFloat tol);
         public IntPtr ConvexDecomposition(double tol) {

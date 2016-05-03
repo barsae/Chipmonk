@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class CircleShape {
-        public IntPtr shape { get; private set; }
+        public IntPtr shape { get; set; }
 
         public CircleShape(IntPtr body, double radius, Vect offset) {
             shape = CP.CircleShapeNew(body, radius, offset);

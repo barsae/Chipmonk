@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class PolylineSet {
-        public IntPtr set { get; private set; }
+        public IntPtr set { get; set; }
 
         public PolylineSet() {
             set = CP.PolylineSetNew();

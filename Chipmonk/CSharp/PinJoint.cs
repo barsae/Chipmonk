@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class PinJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public PinJoint(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB) {
             constraint = CP.PinJointNew(a, b, anchorA, anchorB);

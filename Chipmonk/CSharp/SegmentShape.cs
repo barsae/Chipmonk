@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class SegmentShape {
-        public IntPtr shape { get; private set; }
+        public IntPtr shape { get; set; }
 
         public SegmentShape(IntPtr body, Vect a, Vect b, double radius) {
             shape = CP.SegmentShapeNew(body, a, b, radius);

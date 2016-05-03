@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Space {
-        public IntPtr space { get; private set; }
+        public IntPtr space { get; set; }
 
         public Space() {
             space = CP.SpaceNew();

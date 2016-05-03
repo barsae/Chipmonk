@@ -28,7 +28,7 @@ namespace Chipmonk.ApiGen {
             code.StartNamespace(Namespace);
             code.StartClass(ClassName);
 
-            code.AppendLine("public IntPtr {0} {{ get; private set; }}", Shorthand);
+            code.AppendLine("public IntPtr {0} {{ get; set; }}", Shorthand);
             code.AppendLine();
 
             CreateConstructor(code);
@@ -50,7 +50,7 @@ namespace Chipmonk.ApiGen {
         }
 
         private void CreateConstructor(CSharpBuilder code) {
-            var newFunction = Functions.FirstOrDefault(function => function.FunctionName == "New");
+            var newFunction = Functions.FirstOrDefault(function => function.FunctionName == "New" || function.FunctionName == "NewRaw");
 
             if (newFunction != null) {
                 // Signature
@@ -69,7 +69,7 @@ namespace Chipmonk.ApiGen {
                 code.Indent();
 
                 // Body
-                code.Append("{0} = CP.{1}New(", Shorthand, ClassName);
+                code.Append("{0} = CP.{1}{2}(", Shorthand, ClassName, newFunction.FunctionName);
                 first = true;
                 foreach (var argument in newFunction.Arguments) {
                     if (!first) {

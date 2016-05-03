@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class RatchetJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public RatchetJoint(IntPtr a, IntPtr b, double phase, double ratchet) {
             constraint = CP.RatchetJointNew(a, b, phase, ratchet);

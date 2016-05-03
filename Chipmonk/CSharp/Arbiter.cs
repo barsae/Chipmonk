@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Arbiter {
-        public IntPtr arb { get; private set; }
+        public IntPtr arb { get; set; }
 
         // CP_EXPORT cpBool cpArbiterCallWildcardBeginA(cpArbiter *arb, cpSpace *space);
         public bool CallWildcardBeginA(IntPtr space) {

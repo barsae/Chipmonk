@@ -36,7 +36,7 @@ namespace Chipmonk.ApiGen {
             api.AddClass("PivotJoint", "constraint");
             api.AddClass("Polyline", "line");
             api.AddClass("PolylineSet", "set");
-            api.AddClass("PolyShape", "shape");
+            api.AddClass("PolyShape", "poly");
             api.AddClass("RatchetJoint", "constraint");
             api.AddClass("RotaryJoint", "constraint");
             api.AddClass("SegmentShape", "shape");

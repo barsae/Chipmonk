@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class GrooveJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public GrooveJoint(IntPtr a, IntPtr b, Vect groove_a, Vect groove_b, Vect anchorB) {
             constraint = CP.GrooveJointNew(a, b, groove_a, groove_b, anchorB);

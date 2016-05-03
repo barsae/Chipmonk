@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class GearJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public GearJoint(IntPtr a, IntPtr b, double phase, double ratio) {
             constraint = CP.GearJointNew(a, b, phase, ratio);

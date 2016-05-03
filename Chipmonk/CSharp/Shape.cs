@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Shape {
-        public IntPtr shape { get; private set; }
+        public IntPtr shape { get; set; }
 
         // CP_EXPORT cpBB cpShapeCacheBB(cpShape *shape);
         public BB CacheBB() {

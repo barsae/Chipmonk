@@ -4,40 +4,40 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class PolyShape {
-        public IntPtr shape { get; private set; }
+        public IntPtr poly { get; set; }
+
+        public PolyShape(IntPtr body, int count, IntPtr verts, double radius) {
+            poly = CP.PolyShapeNewRaw(body, count, verts, radius);
+        }
 
         // CP_EXPORT int cpPolyShapeGetCount(const cpShape *shape);
-        public int GetCount() {
-            return CP.PolyShapeGetCount(shape);
-        }
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpGetCount")]
+        public static extern int GetCount(IntPtr shape);
 
         // CP_EXPORT cpFloat cpPolyShapeGetRadius(const cpShape *shape);
-        public double GetRadius() {
-            return CP.PolyShapeGetRadius(shape);
-        }
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpGetRadius")]
+        public static extern double GetRadius(IntPtr shape);
 
         // CP_EXPORT cpVect cpPolyShapeGetVert(const cpShape *shape, int index);
-        public Vect GetVert(int index) {
-            return CP.PolyShapeGetVert(shape, index);
-        }
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpGetVert")]
+        public static extern Vect GetVert(IntPtr shape, int index);
 
         // CP_EXPORT cpPolyShape* cpPolyShapeInitRaw(cpPolyShape *poly, cpBody *body, int count, const cpVect *verts, cpFloat radius);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpInitRaw")]
-        public static extern IntPtr InitRaw(IntPtr poly, IntPtr body, int count, IntPtr verts, double radius);
+        public IntPtr InitRaw(IntPtr body, int count, IntPtr verts, double radius) {
+            return CP.PolyShapeInitRaw(poly, body, count, verts, radius);
+        }
 
         // CP_EXPORT cpShape* cpPolyShapeNewRaw(cpBody *body, int count, const cpVect *verts, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewRaw")]
         public static extern IntPtr NewRaw(IntPtr body, int count, IntPtr verts, double radius);
 
         // CP_EXPORT void cpPolyShapeSetRadius(cpShape *shape, cpFloat radius);
-        public void SetRadius(double radius) {
-            CP.PolyShapeSetRadius(shape, radius);
-        }
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSetRadius")]
+        public static extern void SetRadius(IntPtr shape, double radius);
 
         // CP_EXPORT void cpPolyShapeSetVertsRaw(cpShape *shape, int count, cpVect *verts);
-        public void SetVertsRaw(int count, IntPtr verts) {
-            CP.PolyShapeSetVertsRaw(shape, count, verts);
-        }
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSetVertsRaw")]
+        public static extern void SetVertsRaw(IntPtr shape, int count, IntPtr verts);
 
     }
 }

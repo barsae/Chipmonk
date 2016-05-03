@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Constraint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         // CP_EXPORT cpBody* cpConstraintGetBodyA(const cpConstraint *constraint);
         public IntPtr GetBodyA() {

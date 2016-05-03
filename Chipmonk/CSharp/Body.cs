@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Body {
-        public IntPtr body { get; private set; }
+        public IntPtr body { get; set; }
 
         public Body(double mass, double moment) {
             body = CP.BodyNew(mass, moment);

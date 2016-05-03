@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class SlideJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public SlideJoint(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB, double min, double max) {
             constraint = CP.SlideJointNew(a, b, anchorA, anchorB, min, max);

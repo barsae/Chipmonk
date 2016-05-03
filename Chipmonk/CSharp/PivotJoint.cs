@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class PivotJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
         public PivotJoint(IntPtr a, IntPtr b, Vect pivot) {
             constraint = CP.PivotJointNew(a, b, pivot);

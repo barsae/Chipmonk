@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class RotaryJoint {
-        public IntPtr constraint { get; private set; }
+        public IntPtr constraint { get; set; }
 
     }
 }

@@ -12,5 +12,7 @@ namespace Chipmonk.CApi {
         public override string ToString() {
             return string.Format("({0}, {1})", X, Y);
         }
+
+        public static Vect Zero = new Vect(0.0, 0.0);
     }
 }
