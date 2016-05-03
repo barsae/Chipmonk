@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiBuilder.cs" />
     <Compile Include="Argument.cs" />
+    <Compile Include="Class.cs" />
     <Compile Include="CSharpBuilder.cs" />
     <Compile Include="DirectoryReader.cs" />
     <Compile Include="CFunctionParser.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkipExportingFunction.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

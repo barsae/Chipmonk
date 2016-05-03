@@ -44,6 +44,25 @@
     <Compile Include="CApi\BB.cs" />
     <Compile Include="CApi\CP.cs" />
     <Compile Include="CApi\Vect.cs" />
+    <Compile Include="CSharp\Arbiter.cs" />
+    <Compile Include="CSharp\Body.cs" />
+    <Compile Include="CSharp\CircleShape.cs" />
+    <Compile Include="CSharp\Constraint.cs" />
+    <Compile Include="CSharp\DampedRotarySpring.cs" />
+    <Compile Include="CSharp\GearJoint.cs" />
+    <Compile Include="CSharp\GrooveJoint.cs" />
+    <Compile Include="CSharp\PinJoint.cs" />
+    <Compile Include="CSharp\PivotJoint.cs" />
+    <Compile Include="CSharp\Polyline.cs" />
+    <Compile Include="CSharp\PolylineSet.cs" />
+    <Compile Include="CSharp\PolyShape.cs" />
+    <Compile Include="CSharp\RatchetJoint.cs" />
+    <Compile Include="CSharp\RotaryJoint.cs" />
+    <Compile Include="CSharp\SegmentShape.cs" />
+    <Compile Include="CSharp\Shape.cs" />
+    <Compile Include="CSharp\SimpleMotor.cs" />
+    <Compile Include="CSharp\SlideJoint.cs" />
+    <Compile Include="CSharp\Space.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +73,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

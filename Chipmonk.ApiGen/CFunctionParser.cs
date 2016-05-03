@@ -26,6 +26,7 @@ namespace Chipmonk.ApiGen {
                 var arguments = ParseArguments(rawArguments).ToList();
 
                 return new Function() {
+                    OriginalLine = statement,
                     FunctionName = name,
                     ReturnType = returnType,
                     Arguments = arguments

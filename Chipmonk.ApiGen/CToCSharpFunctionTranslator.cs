@@ -8,6 +8,7 @@ namespace Chipmonk.ApiGen {
     public class CToCSharpFunctionTranslator {
         public Function TranslateFunction(Function function) {
             return new Function() {
+                OriginalLine = function.OriginalLine,
                 ReturnType = ConvertType(function.ReturnType),
                 FunctionName = function.FunctionName,
                 Arguments = function.Arguments

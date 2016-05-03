@@ -32,7 +32,7 @@ namespace Chipmonk.ApiGen {
             Code.Append(string.Format(format, args));
         }
 
-        public void AddLine(string format, params object[] args) {
+        public void AppendLine(string format, params object[] args) {
             CheckIfIndentationNeedsAppended();
             Code.AppendLine(string.Format(format, args));
             startOfLine = true;
