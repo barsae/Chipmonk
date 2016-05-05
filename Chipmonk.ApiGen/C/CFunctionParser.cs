@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Chipmonk.ApiGen.Models;
 
-namespace Chipmonk.ApiGen {
+namespace Chipmonk.ApiGen.C {
     public class CFunctionParser {
         public Function ParseExportStatement(string statement) {
             var openCount = statement.Where(c => c == '(').Count();
@@ -27,7 +24,7 @@ namespace Chipmonk.ApiGen {
 
                 return new Function() {
                     OriginalLine = statement,
-                    FunctionName = name,
+                    Name = name,
                     ReturnType = returnType,
                     Arguments = arguments
                 };
@@ -44,14 +41,14 @@ namespace Chipmonk.ApiGen {
                 foreach (var argument in arguments) {
                     if (argument == "...") {
                         yield return new Argument() {
-                            ArgumentName = "varargs",
-                            ArgumentType = "params object[]"
+                            Name = "varargs",
+                            Type = "params object[]"
                         };
                     } else {
                         var match = regex.Match(argument);
                         yield return new Argument() {
-                            ArgumentName = match.Groups[3].Value,
-                            ArgumentType = match.Groups[1].Value + match.Groups[2].Value.Trim()
+                            Name = match.Groups[3].Value,
+                            Type = match.Groups[1].Value + match.Groups[2].Value.Trim()
                         };
                     }
                 }

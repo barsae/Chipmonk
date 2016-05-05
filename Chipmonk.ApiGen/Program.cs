@@ -1,84 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Chipmonk.ApiGen.C;
 
 namespace Chipmonk.ApiGen {
     public static class Program {
         public static void Main(string[] args) {
             var includeDirectory = @"C:\Users\barsae\Dropbox\code\Chipmunk2D\include\chipmunk";
             var cApiOutputFile = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CApi\CP.cs";
-            var cSharpApiOutputDirectory = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CSharp";
+            //var cSharpApiOutputDirectory = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CSharp";
 
-            var exportFilter = new Regex("^CP_EXPORT.*");
-            var reader = new DirectoryReader();
-            var parser = new CFunctionParser();
-            var translater = new CToCSharpFunctionTranslator();
-            var api = new ApiBuilder();
-            var writer = new CSharpBuilder();
+            var reader = new HeaderFileReader();
+            var translator = new CApiTranslator();
+            var code = new CodeBuilder();
+            var writer = new CSharpWriter();
 
-            writer.AddUsings("System", "System.Runtime.InteropServices");
-            writer.StartNamespace("Chipmonk.CApi");
-            writer.StartStaticClass("CP");
+            var originalFunctions = reader.ReadFunctionsFromDirectory(includeDirectory);
 
-            api.SetNamespace("Chipmonk.CSharp");
-            api.AddClass("Arbiter", "arb");
-            api.AddClass("Body", "body");
-            api.AddClass("CircleShape", "shape");
-            api.AddClass("Constraint", "constraint");
-            api.AddClass("DampedRotarySpring", "constraint");
-            api.AddClass("GearJoint", "constraint");
-            api.AddClass("GrooveJoint", "constraint");
-            api.AddClass("PinJoint", "constraint");
-            api.AddClass("PivotJoint", "constraint");
-            api.AddClass("Polyline", "line");
-            api.AddClass("PolylineSet", "set");
-            api.AddClass("PolyShape", "poly");
-            api.AddClass("RatchetJoint", "constraint");
-            api.AddClass("RotaryJoint", "constraint");
-            api.AddClass("SegmentShape", "shape");
-            api.AddClass("Shape", "shape");
-            api.AddClass("SimpleMotor", "motor");
-            api.AddClass("SlideJoint", "constraint");
-            api.AddClass("Space", "space");
+            var cApi = translator.TranslateFunctions(originalFunctions);
+            writer.Write(code, cApi);
 
-            var originalFunctions = new List<Function>();
-            foreach (var line in reader.ReadAllLines(includeDirectory, exportFilter)) {
-                try {
-                    originalFunctions.Add(parser.ParseExportStatement(line));
-                } catch (SkipExportingFunction skip) {
-                    Console.WriteLine("Failed to export function:\n{0}\n{1}", line, skip.Message);
-                }
-            }
+            File.WriteAllText(cApiOutputFile, code.ToString());
 
-            foreach (var originalFunction in originalFunctions.OrderBy(f => f.FunctionName)) {
-                try {
-                    var translatedFunction = translater.TranslateFunction(originalFunction);
-                    translatedFunction.FunctionName = translatedFunction.FunctionName.Substring(2);
-                    writer.AddExternalFunction(translatedFunction);
-                    api.AddFunction(originalFunction);
-                } catch (SkipExportingFunction skip) {
-                    Console.WriteLine("Failed to export function:\n{0}\n{1}", originalFunction.OriginalLine, skip.Message);
-                }
-            }
+            //var translater = new CToCSharpFunctionTranslator();
+            //var api = new ApiBuilder();
+            //var writer = new CSharpBuilder();
 
-            writer.End();
-            writer.End();
+            //writer.AddUsings("System", "System.Runtime.InteropServices");
+            //writer.StartNamespace("Chipmonk.CApi");
+            //writer.StartStaticClass("CP");
 
-            foreach (var cl in api.Classes) {
-                Console.WriteLine(cl.ClassName);
+            //api.SetNamespace("Chipmonk.CSharp");
+            //api.AddClass("Arbiter", "arb");
+            //api.AddClass("Body", "body");
+            //api.AddClass("CircleShape", "shape");
+            //api.AddClass("Constraint", "constraint");
+            //api.AddClass("DampedRotarySpring", "constraint");
+            //api.AddClass("GearJoint", "constraint");
+            //api.AddClass("GrooveJoint", "constraint");
+            //api.AddClass("PinJoint", "constraint");
+            //api.AddClass("PivotJoint", "constraint");
+            //api.AddClass("Polyline", "line");
+            //api.AddClass("PolylineSet", "set");
+            //api.AddClass("PolyShape", "shape");
+            //api.AddClass("RatchetJoint", "constraint");
+            //api.AddClass("RotaryJoint", "constraint");
+            //api.AddClass("SegmentShape", "shape");
+            //api.AddClass("Shape", "shape");
+            //api.AddClass("SimpleMotor", "motor");
+            //api.AddClass("SlideJoint", "constraint");
+            //api.AddClass("Space", "space");
 
-                foreach (var function in cl.Functions) {
-                    Console.WriteLine("    {0}", function.FunctionName);
-                }
-            }
+            //foreach (var originalFunction in originalFunctions.OrderBy(f => f.FunctionName)) {
+            //    try {
+            //        var translatedFunction = translater.TranslateFunction(originalFunction);
+            //        translatedFunction.FunctionName = translatedFunction.FunctionName.Substring(2);
+            //        writer.AddExternalFunction(translatedFunction);
+            //        //api.AddFunction(originalFunction);
+            //    } catch (SkipExportingFunction skip) {
+            //        Console.WriteLine("Failed to export function:\n{0}\n{1}", originalFunction.OriginalLine, skip.Message);
+            //    }
+            //}
 
-            api.WriteToDirectory(cSharpApiOutputDirectory);
+            //writer.End();
+            //writer.End();
 
-            File.WriteAllText(cApiOutputFile, writer.ToString());
+            //api.WriteToDirectory(cSharpApiOutputDirectory);
+
+            //File.WriteAllText(cApiOutputFile, writer.ToString());
             Console.WriteLine("Done");
             Console.ReadKey(true);
         }
