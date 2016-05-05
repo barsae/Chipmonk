@@ -3,32 +3,32 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Polyline {
-        public IntPtr line { get; set; }
-
-        // CP_EXPORT cpPolylineSet *cpPolylineConvexDecomposition(cpPolyline *line, cpFloat tol);
-        public IntPtr ConvexDecomposition(double tol) {
-            return CP.PolylineConvexDecomposition(line, tol);
+    public class Polyline : Shape {
+        public Polyline(IntPtr handle) : base(handle) {
         }
 
-        // CP_EXPORT cpBool cpPolylineIsClosed(cpPolyline *line);
+        public PolylineSet ConvexDecomposition(double tol) {
+            return new PolylineSet(CP.PolylineConvexDecomposition(Handle, tol));
+        }
+
+        public void Free() {
+            CP.PolylineFree(Handle);
+        }
+
         public bool IsClosed() {
-            return CP.PolylineIsClosed(line);
+            return CP.PolylineIsClosed(Handle);
         }
 
-        // CP_EXPORT cpPolyline *cpPolylineSimplifyCurves(cpPolyline *line, cpFloat tol);
-        public IntPtr SimplifyCurves(double tol) {
-            return CP.PolylineSimplifyCurves(line, tol);
+        public Polyline SimplifyCurves(double tol) {
+            return new Polyline(CP.PolylineSimplifyCurves(Handle, tol));
         }
 
-        // CP_EXPORT cpPolyline *cpPolylineSimplifyVertexes(cpPolyline *line, cpFloat tol);
-        public IntPtr SimplifyVertexes(double tol) {
-            return CP.PolylineSimplifyVertexes(line, tol);
+        public Polyline SimplifyVertexes(double tol) {
+            return new Polyline(CP.PolylineSimplifyVertexes(Handle, tol));
         }
 
-        // CP_EXPORT cpPolyline *cpPolylineToConvexHull(cpPolyline *line, cpFloat tol);
-        public IntPtr ToConvexHull(double tol) {
-            return CP.PolylineToConvexHull(line, tol);
+        public Polyline ToConvexHull(double tol) {
+            return new Polyline(CP.PolylineToConvexHull(Handle, tol));
         }
 
     }

@@ -4,218 +4,210 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Body {
-        public IntPtr body { get; set; }
+        public IntPtr Handle { get; set; }
 
         public Body(double mass, double moment) {
-            body = CP.BodyNew(mass, moment);
+            Handle = CP.BodyNew(mass, moment);
         }
 
-        // CP_EXPORT void cpBodyActivate(cpBody *body);
+        public Body(IntPtr handle) {
+            Handle = handle;
+        }
+
         public void Activate() {
-            CP.BodyActivate(body);
+            CP.BodyActivate(Handle);
         }
 
-        // CP_EXPORT void cpBodyActivateStatic(cpBody *body, cpShape *filter);
-        public void ActivateStatic(IntPtr filter) {
-            CP.BodyActivateStatic(body, filter);
+        public void ActivateStatic(Shape filter) {
+            CP.BodyActivateStatic(Handle, filter.Handle);
         }
 
-        // CP_EXPORT void cpBodyApplyForceAtLocalPoint(cpBody *body, cpVect force, cpVect point);
+        public static Body Alloc() {
+            return new Body(CP.BodyAlloc());
+        }
+
         public void ApplyForceAtLocalPoint(Vect force, Vect point) {
-            CP.BodyApplyForceAtLocalPoint(body, force, point);
+            CP.BodyApplyForceAtLocalPoint(Handle, force, point);
         }
 
-        // CP_EXPORT void cpBodyApplyForceAtWorldPoint(cpBody *body, cpVect force, cpVect point);
         public void ApplyForceAtWorldPoint(Vect force, Vect point) {
-            CP.BodyApplyForceAtWorldPoint(body, force, point);
+            CP.BodyApplyForceAtWorldPoint(Handle, force, point);
         }
 
-        // CP_EXPORT void cpBodyApplyImpulseAtLocalPoint(cpBody *body, cpVect impulse, cpVect point);
         public void ApplyImpulseAtLocalPoint(Vect impulse, Vect point) {
-            CP.BodyApplyImpulseAtLocalPoint(body, impulse, point);
+            CP.BodyApplyImpulseAtLocalPoint(Handle, impulse, point);
         }
 
-        // CP_EXPORT void cpBodyApplyImpulseAtWorldPoint(cpBody *body, cpVect impulse, cpVect point);
         public void ApplyImpulseAtWorldPoint(Vect impulse, Vect point) {
-            CP.BodyApplyImpulseAtWorldPoint(body, impulse, point);
+            CP.BodyApplyImpulseAtWorldPoint(Handle, impulse, point);
         }
 
-        // CP_EXPORT cpFloat cpBodyGetAngle(const cpBody *body);
+        public Shape BoxShapeNew(double width, double height, double radius) {
+            return new Shape(CP.BoxShapeNew(Handle, width, height, radius));
+        }
+
+        public Shape BoxShapeNew2(BB box, double radius) {
+            return new Shape(CP.BoxShapeNew2(Handle, box, radius));
+        }
+
+        public void Destroy() {
+            CP.BodyDestroy(Handle);
+        }
+
+        public void Free() {
+            CP.BodyFree(Handle);
+        }
+
         public double GetAngle() {
-            return CP.BodyGetAngle(body);
+            return CP.BodyGetAngle(Handle);
         }
 
-        // CP_EXPORT cpFloat cpBodyGetAngularVelocity(const cpBody *body);
         public double GetAngularVelocity() {
-            return CP.BodyGetAngularVelocity(body);
+            return CP.BodyGetAngularVelocity(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetCenterOfGravity(const cpBody *body);
         public Vect GetCenterOfGravity() {
-            return CP.BodyGetCenterOfGravity(body);
+            return CP.BodyGetCenterOfGravity(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetForce(const cpBody *body);
         public Vect GetForce() {
-            return CP.BodyGetForce(body);
+            return CP.BodyGetForce(Handle);
         }
 
-        // CP_EXPORT cpFloat cpBodyGetMass(const cpBody *body);
         public double GetMass() {
-            return CP.BodyGetMass(body);
+            return CP.BodyGetMass(Handle);
         }
 
-        // CP_EXPORT cpFloat cpBodyGetMoment(const cpBody *body);
         public double GetMoment() {
-            return CP.BodyGetMoment(body);
+            return CP.BodyGetMoment(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetPosition(const cpBody *body);
         public Vect GetPosition() {
-            return CP.BodyGetPosition(body);
+            return CP.BodyGetPosition(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetRotation(const cpBody *body);
         public Vect GetRotation() {
-            return CP.BodyGetRotation(body);
+            return CP.BodyGetRotation(Handle);
         }
 
-        // CP_EXPORT cpSpace* cpBodyGetSpace(const cpBody *body);
-        public IntPtr GetSpace() {
-            return CP.BodyGetSpace(body);
+        public Space GetSpace() {
+            return new Space(CP.BodyGetSpace(Handle));
         }
 
-        // CP_EXPORT cpFloat cpBodyGetTorque(const cpBody *body);
         public double GetTorque() {
-            return CP.BodyGetTorque(body);
+            return CP.BodyGetTorque(Handle);
         }
 
-        // CP_EXPORT cpBodyType cpBodyGetType(cpBody *body);
         public BodyType GetType() {
-            return CP.BodyGetType(body);
+            return CP.BodyGetType(Handle);
         }
 
-        // CP_EXPORT cpDataPointer cpBodyGetUserData(const cpBody *body);
         public IntPtr GetUserData() {
-            return CP.BodyGetUserData(body);
+            return CP.BodyGetUserData(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetVelocity(const cpBody *body);
         public Vect GetVelocity() {
-            return CP.BodyGetVelocity(body);
+            return CP.BodyGetVelocity(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyGetVelocityAtLocalPoint(const cpBody *body, cpVect point);
         public Vect GetVelocityAtLocalPoint(Vect point) {
-            return CP.BodyGetVelocityAtLocalPoint(body, point);
+            return CP.BodyGetVelocityAtLocalPoint(Handle, point);
         }
 
-        // CP_EXPORT cpVect cpBodyGetVelocityAtWorldPoint(const cpBody *body, cpVect point);
         public Vect GetVelocityAtWorldPoint(Vect point) {
-            return CP.BodyGetVelocityAtWorldPoint(body, point);
+            return CP.BodyGetVelocityAtWorldPoint(Handle, point);
         }
 
-        // CP_EXPORT cpBool cpBodyIsSleeping(const cpBody *body);
+        public Body Init(double mass, double moment) {
+            return new Body(CP.BodyInit(Handle, mass, moment));
+        }
+
         public bool IsSleeping() {
-            return CP.BodyIsSleeping(body);
+            return CP.BodyIsSleeping(Handle);
         }
 
-        // CP_EXPORT cpFloat cpBodyKineticEnergy(const cpBody *body);
         public double KineticEnergy() {
-            return CP.BodyKineticEnergy(body);
+            return CP.BodyKineticEnergy(Handle);
         }
 
-        // CP_EXPORT cpVect cpBodyLocalToWorld(const cpBody *body, const cpVect point);
         public Vect LocalToWorld(Vect point) {
-            return CP.BodyLocalToWorld(body, point);
+            return CP.BodyLocalToWorld(Handle, point);
         }
 
-        // CP_EXPORT cpBody* cpBodyNewKinematic(void);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewKinematic")]
-        public static extern IntPtr NewKinematic();
+        public static Body New(double mass, double moment) {
+            return new Body(CP.BodyNew(mass, moment));
+        }
 
-        // CP_EXPORT cpBody* cpBodyNewStatic(void);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNewStatic")]
-        public static extern IntPtr NewStatic();
+        public static Body NewKinematic() {
+            return new Body(CP.BodyNewKinematic());
+        }
 
-        // CP_EXPORT void cpBodySetAngle(cpBody *body, cpFloat a);
+        public static Body NewStatic() {
+            return new Body(CP.BodyNewStatic());
+        }
+
         public void SetAngle(double a) {
-            CP.BodySetAngle(body, a);
+            CP.BodySetAngle(Handle, a);
         }
 
-        // CP_EXPORT void cpBodySetAngularVelocity(cpBody *body, cpFloat angularVelocity);
         public void SetAngularVelocity(double angularVelocity) {
-            CP.BodySetAngularVelocity(body, angularVelocity);
+            CP.BodySetAngularVelocity(Handle, angularVelocity);
         }
 
-        // CP_EXPORT void cpBodySetCenterOfGravity(cpBody *body, cpVect cog);
         public void SetCenterOfGravity(Vect cog) {
-            CP.BodySetCenterOfGravity(body, cog);
+            CP.BodySetCenterOfGravity(Handle, cog);
         }
 
-        // CP_EXPORT void cpBodySetForce(cpBody *body, cpVect force);
         public void SetForce(Vect force) {
-            CP.BodySetForce(body, force);
+            CP.BodySetForce(Handle, force);
         }
 
-        // CP_EXPORT void cpBodySetMass(cpBody *body, cpFloat m);
         public void SetMass(double m) {
-            CP.BodySetMass(body, m);
+            CP.BodySetMass(Handle, m);
         }
 
-        // CP_EXPORT void cpBodySetMoment(cpBody *body, cpFloat i);
         public void SetMoment(double i) {
-            CP.BodySetMoment(body, i);
+            CP.BodySetMoment(Handle, i);
         }
 
-        // CP_EXPORT void cpBodySetPosition(cpBody *body, cpVect pos);
         public void SetPosition(Vect pos) {
-            CP.BodySetPosition(body, pos);
+            CP.BodySetPosition(Handle, pos);
         }
 
-        // CP_EXPORT void cpBodySetTorque(cpBody *body, cpFloat torque);
         public void SetTorque(double torque) {
-            CP.BodySetTorque(body, torque);
+            CP.BodySetTorque(Handle, torque);
         }
 
-        // CP_EXPORT void cpBodySetType(cpBody *body, cpBodyType type);
         public void SetType(BodyType type) {
-            CP.BodySetType(body, type);
+            CP.BodySetType(Handle, type);
         }
 
-        // CP_EXPORT void cpBodySetUserData(cpBody *body, cpDataPointer userData);
         public void SetUserData(IntPtr userData) {
-            CP.BodySetUserData(body, userData);
+            CP.BodySetUserData(Handle, userData);
         }
 
-        // CP_EXPORT void cpBodySetVelocity(cpBody *body, cpVect velocity);
         public void SetVelocity(Vect velocity) {
-            CP.BodySetVelocity(body, velocity);
+            CP.BodySetVelocity(Handle, velocity);
         }
 
-        // CP_EXPORT void cpBodySleep(cpBody *body);
         public void Sleep() {
-            CP.BodySleep(body);
+            CP.BodySleep(Handle);
         }
 
-        // CP_EXPORT void cpBodySleepWithGroup(cpBody *body, cpBody *group);
-        public void SleepWithGroup(IntPtr group) {
-            CP.BodySleepWithGroup(body, group);
+        public void SleepWithGroup(Body group) {
+            CP.BodySleepWithGroup(Handle, group.Handle);
         }
 
-        // CP_EXPORT void cpBodyUpdatePosition(cpBody *body, cpFloat dt);
         public void UpdatePosition(double dt) {
-            CP.BodyUpdatePosition(body, dt);
+            CP.BodyUpdatePosition(Handle, dt);
         }
 
-        // CP_EXPORT void cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt);
         public void UpdateVelocity(Vect gravity, double damping, double dt) {
-            CP.BodyUpdateVelocity(body, gravity, damping, dt);
+            CP.BodyUpdateVelocity(Handle, gravity, damping, dt);
         }
 
-        // CP_EXPORT cpVect cpBodyWorldToLocal(const cpBody *body, const cpVect point);
         public Vect WorldToLocal(Vect point) {
-            return CP.BodyWorldToLocal(body, point);
+            return CP.BodyWorldToLocal(Handle, point);
         }
 
     }

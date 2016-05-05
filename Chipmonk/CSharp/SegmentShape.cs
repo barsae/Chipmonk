@@ -3,46 +3,51 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class SegmentShape {
-        public IntPtr shape { get; set; }
-
-        public SegmentShape(IntPtr body, Vect a, Vect b, double radius) {
-            shape = CP.SegmentShapeNew(body, a, b, radius);
+    public class SegmentShape : Shape {
+        public SegmentShape(Body body, Vect a, Vect b, double radius) : base(CP.SegmentShapeNew(body.Handle, a, b, radius)) {
         }
 
-        // CP_EXPORT cpVect cpSegmentShapeGetA(const cpShape *shape);
+        public SegmentShape(IntPtr handle) : base(handle) {
+        }
+
+        public static SegmentShape Alloc() {
+            return new SegmentShape(CP.SegmentShapeAlloc());
+        }
+
         public Vect GetA() {
-            return CP.SegmentShapeGetA(shape);
+            return CP.SegmentShapeGetA(Handle);
         }
 
-        // CP_EXPORT cpVect cpSegmentShapeGetB(const cpShape *shape);
         public Vect GetB() {
-            return CP.SegmentShapeGetB(shape);
+            return CP.SegmentShapeGetB(Handle);
         }
 
-        // CP_EXPORT cpVect cpSegmentShapeGetNormal(const cpShape *shape);
         public Vect GetNormal() {
-            return CP.SegmentShapeGetNormal(shape);
+            return CP.SegmentShapeGetNormal(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSegmentShapeGetRadius(const cpShape *shape);
         public double GetRadius() {
-            return CP.SegmentShapeGetRadius(shape);
+            return CP.SegmentShapeGetRadius(Handle);
         }
 
-        // CP_EXPORT void cpSegmentShapeSetEndpoints(cpShape *shape, cpVect a, cpVect b);
+        public SegmentShape Init(Body body, Vect a, Vect b, double radius) {
+            return new SegmentShape(CP.SegmentShapeInit(Handle, body.Handle, a, b, radius));
+        }
+
+        public static Shape New(Body body, Vect a, Vect b, double radius) {
+            return new Shape(CP.SegmentShapeNew(body.Handle, a, b, radius));
+        }
+
         public void SetEndpoints(Vect a, Vect b) {
-            CP.SegmentShapeSetEndpoints(shape, a, b);
+            CP.SegmentShapeSetEndpoints(Handle, a, b);
         }
 
-        // CP_EXPORT void cpSegmentShapeSetNeighbors(cpShape *shape, cpVect prev, cpVect next);
         public void SetNeighbors(Vect prev, Vect next) {
-            CP.SegmentShapeSetNeighbors(shape, prev, next);
+            CP.SegmentShapeSetNeighbors(Handle, prev, next);
         }
 
-        // CP_EXPORT void cpSegmentShapeSetRadius(cpShape *shape, cpFloat radius);
         public void SetRadius(double radius) {
-            CP.SegmentShapeSetRadius(shape, radius);
+            CP.SegmentShapeSetRadius(Handle, radius);
         }
 
     }

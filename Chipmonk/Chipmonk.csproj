@@ -45,10 +45,12 @@
     <Compile Include="CApi\CP.cs" />
     <Compile Include="CApi\Vect.cs" />
     <Compile Include="CSharp\Arbiter.cs" />
+    <Compile Include="CSharp\BBTree.cs" />
     <Compile Include="CSharp\Body.cs" />
     <Compile Include="CSharp\CircleShape.cs" />
     <Compile Include="CSharp\Constraint.cs" />
     <Compile Include="CSharp\DampedRotarySpring.cs" />
+    <Compile Include="CSharp\DampedSpring.cs" />
     <Compile Include="CSharp\GearJoint.cs" />
     <Compile Include="CSharp\GrooveJoint.cs" />
     <Compile Include="CSharp\PinJoint.cs" />
@@ -57,7 +59,7 @@
     <Compile Include="CSharp\PolylineSet.cs" />
     <Compile Include="CSharp\PolyShape.cs" />
     <Compile Include="CSharp\RatchetJoint.cs" />
-    <Compile Include="CSharp\RotaryJoint.cs" />
+    <Compile Include="CSharp\RotaryLimitJoint.cs" />
     <Compile Include="CSharp\SegmentShape.cs" />
     <Compile Include="CSharp\Shape.cs" />
     <Compile Include="CSharp\SimpleMotor.cs" />

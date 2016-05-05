@@ -3,41 +3,47 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class RatchetJoint {
-        public IntPtr constraint { get; set; }
-
-        public RatchetJoint(IntPtr a, IntPtr b, double phase, double ratchet) {
-            constraint = CP.RatchetJointNew(a, b, phase, ratchet);
+    public class RatchetJoint : Constraint {
+        public RatchetJoint(Body a, Body b, double phase, double ratchet) : base(CP.RatchetJointNew(a.Handle, b.Handle, phase, ratchet)) {
         }
 
-        // CP_EXPORT cpFloat cpRatchetJointGetAngle(const cpConstraint *constraint);
+        public RatchetJoint(IntPtr handle) : base(handle) {
+        }
+
+        public static RatchetJoint Alloc() {
+            return new RatchetJoint(CP.RatchetJointAlloc());
+        }
+
         public double GetAngle() {
-            return CP.RatchetJointGetAngle(constraint);
+            return CP.RatchetJointGetAngle(Handle);
         }
 
-        // CP_EXPORT cpFloat cpRatchetJointGetPhase(const cpConstraint *constraint);
         public double GetPhase() {
-            return CP.RatchetJointGetPhase(constraint);
+            return CP.RatchetJointGetPhase(Handle);
         }
 
-        // CP_EXPORT cpFloat cpRatchetJointGetRatchet(const cpConstraint *constraint);
         public double GetRatchet() {
-            return CP.RatchetJointGetRatchet(constraint);
+            return CP.RatchetJointGetRatchet(Handle);
         }
 
-        // CP_EXPORT void cpRatchetJointSetAngle(cpConstraint *constraint, cpFloat angle);
+        public RatchetJoint Init(Body a, Body b, double phase, double ratchet) {
+            return new RatchetJoint(CP.RatchetJointInit(Handle, a.Handle, b.Handle, phase, ratchet));
+        }
+
+        public static Constraint New(Body a, Body b, double phase, double ratchet) {
+            return new Constraint(CP.RatchetJointNew(a.Handle, b.Handle, phase, ratchet));
+        }
+
         public void SetAngle(double angle) {
-            CP.RatchetJointSetAngle(constraint, angle);
+            CP.RatchetJointSetAngle(Handle, angle);
         }
 
-        // CP_EXPORT void cpRatchetJointSetPhase(cpConstraint *constraint, cpFloat phase);
         public void SetPhase(double phase) {
-            CP.RatchetJointSetPhase(constraint, phase);
+            CP.RatchetJointSetPhase(Handle, phase);
         }
 
-        // CP_EXPORT void cpRatchetJointSetRatchet(cpConstraint *constraint, cpFloat ratchet);
         public void SetRatchet(double ratchet) {
-            CP.RatchetJointSetRatchet(constraint, ratchet);
+            CP.RatchetJointSetRatchet(Handle, ratchet);
         }
 
     }

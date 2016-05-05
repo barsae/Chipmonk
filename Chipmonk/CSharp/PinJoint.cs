@@ -3,41 +3,47 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class PinJoint {
-        public IntPtr constraint { get; set; }
-
-        public PinJoint(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB) {
-            constraint = CP.PinJointNew(a, b, anchorA, anchorB);
+    public class PinJoint : Constraint {
+        public PinJoint(Body a, Body b, Vect anchorA, Vect anchorB) : base(CP.PinJointNew(a.Handle, b.Handle, anchorA, anchorB)) {
         }
 
-        // CP_EXPORT cpVect cpPinJointGetAnchorA(const cpConstraint *constraint);
+        public PinJoint(IntPtr handle) : base(handle) {
+        }
+
+        public static PinJoint Alloc() {
+            return new PinJoint(CP.PinJointAlloc());
+        }
+
         public Vect GetAnchorA() {
-            return CP.PinJointGetAnchorA(constraint);
+            return CP.PinJointGetAnchorA(Handle);
         }
 
-        // CP_EXPORT cpVect cpPinJointGetAnchorB(const cpConstraint *constraint);
         public Vect GetAnchorB() {
-            return CP.PinJointGetAnchorB(constraint);
+            return CP.PinJointGetAnchorB(Handle);
         }
 
-        // CP_EXPORT cpFloat cpPinJointGetDist(const cpConstraint *constraint);
         public double GetDist() {
-            return CP.PinJointGetDist(constraint);
+            return CP.PinJointGetDist(Handle);
         }
 
-        // CP_EXPORT void cpPinJointSetAnchorA(cpConstraint *constraint, cpVect anchorA);
+        public PinJoint Init(Body a, Body b, Vect anchorA, Vect anchorB) {
+            return new PinJoint(CP.PinJointInit(Handle, a.Handle, b.Handle, anchorA, anchorB));
+        }
+
+        public static Constraint New(Body a, Body b, Vect anchorA, Vect anchorB) {
+            return new Constraint(CP.PinJointNew(a.Handle, b.Handle, anchorA, anchorB));
+        }
+
         public void SetAnchorA(Vect anchorA) {
-            CP.PinJointSetAnchorA(constraint, anchorA);
+            CP.PinJointSetAnchorA(Handle, anchorA);
         }
 
-        // CP_EXPORT void cpPinJointSetAnchorB(cpConstraint *constraint, cpVect anchorB);
         public void SetAnchorB(Vect anchorB) {
-            CP.PinJointSetAnchorB(constraint, anchorB);
+            CP.PinJointSetAnchorB(Handle, anchorB);
         }
 
-        // CP_EXPORT void cpPinJointSetDist(cpConstraint *constraint, cpFloat dist);
         public void SetDist(double dist) {
-            CP.PinJointSetDist(constraint, dist);
+            CP.PinJointSetDist(Handle, dist);
         }
 
     }

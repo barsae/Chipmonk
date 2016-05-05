@@ -4,193 +4,194 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Space {
-        public IntPtr space { get; set; }
+        public IntPtr Handle { get; set; }
 
         public Space() {
-            space = CP.SpaceNew();
+            Handle = CP.SpaceNew();
         }
 
-        // CP_EXPORT cpBody* cpSpaceAddBody(cpSpace *space, cpBody *body);
-        public IntPtr AddBody(IntPtr body) {
-            return CP.SpaceAddBody(space, body);
+        public Space(IntPtr handle) {
+            Handle = handle;
         }
 
-        // CP_EXPORT cpConstraint* cpSpaceAddConstraint(cpSpace *space, cpConstraint *constraint);
-        public IntPtr AddConstraint(IntPtr constraint) {
-            return CP.SpaceAddConstraint(space, constraint);
+        public Body AddBody(Body body) {
+            return new Body(CP.SpaceAddBody(Handle, body.Handle));
         }
 
-        // CP_EXPORT cpCollisionHandler *cpSpaceAddDefaultCollisionHandler(cpSpace *space);
+        public Constraint AddConstraint(Constraint constraint) {
+            return new Constraint(CP.SpaceAddConstraint(Handle, constraint.Handle));
+        }
+
         public IntPtr AddDefaultCollisionHandler() {
-            return CP.SpaceAddDefaultCollisionHandler(space);
+            return CP.SpaceAddDefaultCollisionHandler(Handle);
         }
 
-        // CP_EXPORT cpShape* cpSpaceAddShape(cpSpace *space, cpShape *shape);
-        public IntPtr AddShape(IntPtr shape) {
-            return CP.SpaceAddShape(space, shape);
+        public Shape AddShape(Shape shape) {
+            return new Shape(CP.SpaceAddShape(Handle, shape.Handle));
         }
 
-        // CP_EXPORT cpBool cpSpaceContainsBody(cpSpace *space, cpBody *body);
-        public bool ContainsBody(IntPtr body) {
-            return CP.SpaceContainsBody(space, body);
+        public static Space Alloc() {
+            return new Space(CP.SpaceAlloc());
         }
 
-        // CP_EXPORT cpBool cpSpaceContainsConstraint(cpSpace *space, cpConstraint *constraint);
-        public bool ContainsConstraint(IntPtr constraint) {
-            return CP.SpaceContainsConstraint(space, constraint);
+        public bool ContainsBody(Body body) {
+            return CP.SpaceContainsBody(Handle, body.Handle);
         }
 
-        // CP_EXPORT cpBool cpSpaceContainsShape(cpSpace *space, cpShape *shape);
-        public bool ContainsShape(IntPtr shape) {
-            return CP.SpaceContainsShape(space, shape);
+        public bool ContainsConstraint(Constraint constraint) {
+            return CP.SpaceContainsConstraint(Handle, constraint.Handle);
         }
 
-        // CP_EXPORT void cpSpaceDebugDraw(cpSpace *space, cpSpaceDebugDrawOptions *options);
+        public bool ContainsShape(Shape shape) {
+            return CP.SpaceContainsShape(Handle, shape.Handle);
+        }
+
         public void DebugDraw(IntPtr options) {
-            CP.SpaceDebugDraw(space, options);
+            CP.SpaceDebugDraw(Handle, options);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetCollisionBias(const cpSpace *space);
+        public void Destroy() {
+            CP.SpaceDestroy(Handle);
+        }
+
+        public void Free() {
+            CP.SpaceFree(Handle);
+        }
+
         public double GetCollisionBias() {
-            return CP.SpaceGetCollisionBias(space);
+            return CP.SpaceGetCollisionBias(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetCollisionSlop(const cpSpace *space);
         public double GetCollisionSlop() {
-            return CP.SpaceGetCollisionSlop(space);
+            return CP.SpaceGetCollisionSlop(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetCurrentTimeStep(const cpSpace *space);
         public double GetCurrentTimeStep() {
-            return CP.SpaceGetCurrentTimeStep(space);
+            return CP.SpaceGetCurrentTimeStep(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetDamping(const cpSpace *space);
         public double GetDamping() {
-            return CP.SpaceGetDamping(space);
+            return CP.SpaceGetDamping(Handle);
         }
 
-        // CP_EXPORT cpVect cpSpaceGetGravity(const cpSpace *space);
         public Vect GetGravity() {
-            return CP.SpaceGetGravity(space);
+            return CP.SpaceGetGravity(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetIdleSpeedThreshold(const cpSpace *space);
         public double GetIdleSpeedThreshold() {
-            return CP.SpaceGetIdleSpeedThreshold(space);
+            return CP.SpaceGetIdleSpeedThreshold(Handle);
         }
 
-        // CP_EXPORT int cpSpaceGetIterations(const cpSpace *space);
         public int GetIterations() {
-            return CP.SpaceGetIterations(space);
+            return CP.SpaceGetIterations(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSpaceGetSleepTimeThreshold(const cpSpace *space);
         public double GetSleepTimeThreshold() {
-            return CP.SpaceGetSleepTimeThreshold(space);
+            return CP.SpaceGetSleepTimeThreshold(Handle);
         }
 
-        // CP_EXPORT cpBody* cpSpaceGetStaticBody(const cpSpace *space);
-        public IntPtr GetStaticBody() {
-            return CP.SpaceGetStaticBody(space);
+        public Body GetStaticBody() {
+            return new Body(CP.SpaceGetStaticBody(Handle));
         }
 
-        // CP_EXPORT cpDataPointer cpSpaceGetUserData(const cpSpace *space);
         public IntPtr GetUserData() {
-            return CP.SpaceGetUserData(space);
+            return CP.SpaceGetUserData(Handle);
         }
 
-        // CP_EXPORT cpSpaceHash* cpSpaceHashAlloc(void);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpHashAlloc")]
-        public static extern IntPtr HashAlloc();
+        public static IntPtr HashAlloc() {
+            return CP.SpaceHashAlloc();
+        }
 
-        // CP_EXPORT void cpSpaceHashResize(cpSpaceHash *hash, cpFloat celldim, int numcells);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpHashResize")]
-        public static extern void HashResize(IntPtr hash, double celldim, int numcells);
+        public static void HashResize(IntPtr hash, double celldim, int numcells) {
+            CP.SpaceHashResize(hash, celldim, numcells);
+        }
 
-        // CP_EXPORT cpBool cpSpaceIsLocked(cpSpace *space);
+        public void HastySpaceFree() {
+            CP.HastySpaceFree(Handle);
+        }
+
+        public void HastySpaceSetThreads(UInt64 threads) {
+            CP.HastySpaceSetThreads(Handle, threads);
+        }
+
+        public void HastySpaceStep(double dt) {
+            CP.HastySpaceStep(Handle, dt);
+        }
+
+        public Space Init() {
+            return new Space(CP.SpaceInit(Handle));
+        }
+
         public bool IsLocked() {
-            return CP.SpaceIsLocked(space);
+            return CP.SpaceIsLocked(Handle);
         }
 
-        // CP_EXPORT void cpSpaceReindexShape(cpSpace *space, cpShape *shape);
-        public void ReindexShape(IntPtr shape) {
-            CP.SpaceReindexShape(space, shape);
+        public static Space New() {
+            return new Space(CP.SpaceNew());
         }
 
-        // CP_EXPORT void cpSpaceReindexShapesForBody(cpSpace *space, cpBody *body);
-        public void ReindexShapesForBody(IntPtr body) {
-            CP.SpaceReindexShapesForBody(space, body);
+        public void ReindexShape(Shape shape) {
+            CP.SpaceReindexShape(Handle, shape.Handle);
         }
 
-        // CP_EXPORT void cpSpaceReindexStatic(cpSpace *space);
+        public void ReindexShapesForBody(Body body) {
+            CP.SpaceReindexShapesForBody(Handle, body.Handle);
+        }
+
         public void ReindexStatic() {
-            CP.SpaceReindexStatic(space);
+            CP.SpaceReindexStatic(Handle);
         }
 
-        // CP_EXPORT void cpSpaceRemoveBody(cpSpace *space, cpBody *body);
-        public void RemoveBody(IntPtr body) {
-            CP.SpaceRemoveBody(space, body);
+        public void RemoveBody(Body body) {
+            CP.SpaceRemoveBody(Handle, body.Handle);
         }
 
-        // CP_EXPORT void cpSpaceRemoveConstraint(cpSpace *space, cpConstraint *constraint);
-        public void RemoveConstraint(IntPtr constraint) {
-            CP.SpaceRemoveConstraint(space, constraint);
+        public void RemoveConstraint(Constraint constraint) {
+            CP.SpaceRemoveConstraint(Handle, constraint.Handle);
         }
 
-        // CP_EXPORT void cpSpaceRemoveShape(cpSpace *space, cpShape *shape);
-        public void RemoveShape(IntPtr shape) {
-            CP.SpaceRemoveShape(space, shape);
+        public void RemoveShape(Shape shape) {
+            CP.SpaceRemoveShape(Handle, shape.Handle);
         }
 
-        // CP_EXPORT void cpSpaceSetCollisionBias(cpSpace *space, cpFloat collisionBias);
         public void SetCollisionBias(double collisionBias) {
-            CP.SpaceSetCollisionBias(space, collisionBias);
+            CP.SpaceSetCollisionBias(Handle, collisionBias);
         }
 
-        // CP_EXPORT void cpSpaceSetCollisionSlop(cpSpace *space, cpFloat collisionSlop);
         public void SetCollisionSlop(double collisionSlop) {
-            CP.SpaceSetCollisionSlop(space, collisionSlop);
+            CP.SpaceSetCollisionSlop(Handle, collisionSlop);
         }
 
-        // CP_EXPORT void cpSpaceSetDamping(cpSpace *space, cpFloat damping);
         public void SetDamping(double damping) {
-            CP.SpaceSetDamping(space, damping);
+            CP.SpaceSetDamping(Handle, damping);
         }
 
-        // CP_EXPORT void cpSpaceSetGravity(cpSpace *space, cpVect gravity);
         public void SetGravity(Vect gravity) {
-            CP.SpaceSetGravity(space, gravity);
+            CP.SpaceSetGravity(Handle, gravity);
         }
 
-        // CP_EXPORT void cpSpaceSetIdleSpeedThreshold(cpSpace *space, cpFloat idleSpeedThreshold);
         public void SetIdleSpeedThreshold(double idleSpeedThreshold) {
-            CP.SpaceSetIdleSpeedThreshold(space, idleSpeedThreshold);
+            CP.SpaceSetIdleSpeedThreshold(Handle, idleSpeedThreshold);
         }
 
-        // CP_EXPORT void cpSpaceSetIterations(cpSpace *space, int iterations);
         public void SetIterations(int iterations) {
-            CP.SpaceSetIterations(space, iterations);
+            CP.SpaceSetIterations(Handle, iterations);
         }
 
-        // CP_EXPORT void cpSpaceSetSleepTimeThreshold(cpSpace *space, cpFloat sleepTimeThreshold);
         public void SetSleepTimeThreshold(double sleepTimeThreshold) {
-            CP.SpaceSetSleepTimeThreshold(space, sleepTimeThreshold);
+            CP.SpaceSetSleepTimeThreshold(Handle, sleepTimeThreshold);
         }
 
-        // CP_EXPORT void cpSpaceSetUserData(cpSpace *space, cpDataPointer userData);
         public void SetUserData(IntPtr userData) {
-            CP.SpaceSetUserData(space, userData);
+            CP.SpaceSetUserData(Handle, userData);
         }
 
-        // CP_EXPORT void cpSpaceStep(cpSpace *space, cpFloat dt);
         public void Step(double dt) {
-            CP.SpaceStep(space, dt);
+            CP.SpaceStep(Handle, dt);
         }
 
-        // CP_EXPORT void cpSpaceUseSpatialHash(cpSpace *space, cpFloat dim, int count);
         public void UseSpatialHash(double dim, int count) {
-            CP.SpaceUseSpatialHash(space, dim, count);
+            CP.SpaceUseSpatialHash(Handle, dim, count);
         }
 
     }

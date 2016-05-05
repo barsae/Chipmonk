@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Chipmonk.ApiGen.Models;
 
 namespace Chipmonk.ApiGen {
@@ -7,9 +8,22 @@ namespace Chipmonk.ApiGen {
         public CSharpWriter() {
         }
 
+        public void Write(CsDirectory directory) {
+            if (directory.Files != null) {
+                foreach (var file in directory.Files) {
+                    var code = new CodeBuilder();
+                    Write(code, file);
+                    var filename = Path.Combine(directory.Name, file.Name);
+                    File.WriteAllText(filename, code.ToString());
+                }
+            }
+        }
+
         public void Write(CodeBuilder code, CsFile file) {
-            foreach (var usingStatement in file.UsingStatements) {
-                code.AppendLine("using {0};", usingStatement.Directive);
+            if (file.UsingStatements != null) {
+                foreach (var usingStatement in file.UsingStatements) {
+                    code.AppendLine("using {0};", usingStatement.Directive);
+                }
             }
             code.AppendLine();
 
@@ -35,10 +49,27 @@ namespace Chipmonk.ApiGen {
         }
 
         public void Write(CodeBuilder code, Class cl) {
-            code.AppendLine("public {0}class {1} {{",
-                            cl.Static ? "static " : "",
-                            cl.Name);
+            code.Append("public {0}class {1} ",
+                        cl.Static ? "static " : "",
+                        cl.Name);
+            if (cl.Parent != null) {
+                code.Append(": {0} ", cl.Parent.Name);
+            }
+            code.AppendLine("{{");
             code.Indent();
+
+            if (cl.Properties != null) {
+                foreach (var property in cl.Properties) {
+                    Write(code, property);
+                }
+                code.AppendLine();
+            }
+
+            if (cl.Constructors != null) {
+                foreach (var constructor in cl.Constructors) {
+                    Write(code, cl, constructor);
+                }
+            }
 
             if (cl.Methods != null) {
                 foreach (var method in cl.Methods) {
@@ -50,7 +81,43 @@ namespace Chipmonk.ApiGen {
             code.AppendLine("}}");
         }
 
+        private void Write(CodeBuilder code, Property property) {
+            code.AppendLine("public {0} {1} {{ get; set; }}", property.Type, property.Name);
+        }
+
+        private void Write(CodeBuilder code, Class cl, Constructor constructor) {
+            code.Append("public {0}(", cl.Name);
+
+            code.StartSeparatedList(", ");
+            if (constructor.Parameters != null) {
+                foreach (var parameter in constructor.Parameters) {
+                    code.Append("{0} {1}", parameter.Type, parameter.Name);
+                }
+            }
+            code.EndSeparatedList();
+            code.Append(")");
+
+            if (constructor.Base != null) {
+                code.Append(" : base({0})", constructor.Base.Statement);
+            }
+
+            code.AppendLine(" {{");
+
+            code.Indent();
+            Write(code, constructor.Body);
+            code.Dedent();
+
+            code.AppendLine("}}");
+            code.AppendLine();
+        }
+
         public void Write(CodeBuilder code, Method method) {
+            if (method.Comments != null) {
+                foreach (var comment in method.Comments) {
+                    code.AppendLine("// {0}", comment);
+                }
+            }
+
             Write(code, method.Attributes);
 
             code.Append("public {0}{1}{2} {3}(",
@@ -60,8 +127,8 @@ namespace Chipmonk.ApiGen {
                         method.Name);
 
             code.StartSeparatedList(", ");
-            foreach (var argument in method.Arguments) {
-                code.Append("{0} {1}", argument.Type, argument.Name);
+            foreach (var parameter in method.Parameters) {
+                code.Append("{0} {1}", parameter.Type, parameter.Name);
             }
             code.EndSeparatedList();
 
@@ -69,9 +136,25 @@ namespace Chipmonk.ApiGen {
                 code.AppendLine(");");
                 code.AppendLine();
             } else {
-                throw new NotImplementedException();
+                code.AppendLine(") {{");
+
+                code.Indent();
+                Write(code, method.Body);
+                code.Dedent();
+
+                code.AppendLine("}}");
+                code.AppendLine();
             }
         }
+
+        public void Write(CodeBuilder code, List<Expression> expressions) {
+            if (expressions != null) {
+                foreach (var expression in expressions) {
+                    code.AppendLine(expression.Statement);
+                }
+            }
+        }
+
 
         public void Write(CodeBuilder code, List<CsAttribute> attributes) {
             if (attributes != null) {

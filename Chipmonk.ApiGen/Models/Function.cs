@@ -6,6 +6,6 @@ namespace Chipmonk.ApiGen.Models {
         public string OriginalLine { get; set; }
         public string Name { get; set; }
         public string ReturnType { get; set; }
-        public List<Argument> Arguments { get; set; }
+        public List<Parameter> Parameters { get; set; }
     }
 }

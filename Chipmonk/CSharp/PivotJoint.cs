@@ -3,35 +3,43 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class PivotJoint {
-        public IntPtr constraint { get; set; }
-
-        public PivotJoint(IntPtr a, IntPtr b, Vect pivot) {
-            constraint = CP.PivotJointNew(a, b, pivot);
+    public class PivotJoint : Constraint {
+        public PivotJoint(Body a, Body b, Vect pivot) : base(CP.PivotJointNew(a.Handle, b.Handle, pivot)) {
         }
 
-        // CP_EXPORT cpVect cpPivotJointGetAnchorA(const cpConstraint *constraint);
+        public PivotJoint(IntPtr handle) : base(handle) {
+        }
+
+        public static PivotJoint Alloc() {
+            return new PivotJoint(CP.PivotJointAlloc());
+        }
+
         public Vect GetAnchorA() {
-            return CP.PivotJointGetAnchorA(constraint);
+            return CP.PivotJointGetAnchorA(Handle);
         }
 
-        // CP_EXPORT cpVect cpPivotJointGetAnchorB(const cpConstraint *constraint);
         public Vect GetAnchorB() {
-            return CP.PivotJointGetAnchorB(constraint);
+            return CP.PivotJointGetAnchorB(Handle);
         }
 
-        // CP_EXPORT cpConstraint* cpPivotJointNew2(cpBody *a, cpBody *b, cpVect anchorA, cpVect anchorB);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpNew2")]
-        public static extern IntPtr New2(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB);
+        public PivotJoint Init(Body a, Body b, Vect anchorA, Vect anchorB) {
+            return new PivotJoint(CP.PivotJointInit(Handle, a.Handle, b.Handle, anchorA, anchorB));
+        }
 
-        // CP_EXPORT void cpPivotJointSetAnchorA(cpConstraint *constraint, cpVect anchorA);
+        public static Constraint New(Body a, Body b, Vect pivot) {
+            return new Constraint(CP.PivotJointNew(a.Handle, b.Handle, pivot));
+        }
+
+        public static Constraint New2(Body a, Body b, Vect anchorA, Vect anchorB) {
+            return new Constraint(CP.PivotJointNew2(a.Handle, b.Handle, anchorA, anchorB));
+        }
+
         public void SetAnchorA(Vect anchorA) {
-            CP.PivotJointSetAnchorA(constraint, anchorA);
+            CP.PivotJointSetAnchorA(Handle, anchorA);
         }
 
-        // CP_EXPORT void cpPivotJointSetAnchorB(cpConstraint *constraint, cpVect anchorB);
         public void SetAnchorB(Vect anchorB) {
-            CP.PivotJointSetAnchorB(constraint, anchorB);
+            CP.PivotJointSetAnchorB(Handle, anchorB);
         }
 
     }

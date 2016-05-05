@@ -3,31 +3,39 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class CircleShape {
-        public IntPtr shape { get; set; }
-
-        public CircleShape(IntPtr body, double radius, Vect offset) {
-            shape = CP.CircleShapeNew(body, radius, offset);
+    public class CircleShape : Shape {
+        public CircleShape(Body body, double radius, Vect offset) : base(CP.CircleShapeNew(body.Handle, radius, offset)) {
         }
 
-        // CP_EXPORT cpVect cpCircleShapeGetOffset(const cpShape *shape);
+        public CircleShape(IntPtr handle) : base(handle) {
+        }
+
+        public static CircleShape Alloc() {
+            return new CircleShape(CP.CircleShapeAlloc());
+        }
+
         public Vect GetOffset() {
-            return CP.CircleShapeGetOffset(shape);
+            return CP.CircleShapeGetOffset(Handle);
         }
 
-        // CP_EXPORT cpFloat cpCircleShapeGetRadius(const cpShape *shape);
         public double GetRadius() {
-            return CP.CircleShapeGetRadius(shape);
+            return CP.CircleShapeGetRadius(Handle);
         }
 
-        // CP_EXPORT void cpCircleShapeSetOffset(cpShape *shape, cpVect offset);
+        public CircleShape Init(Body body, double radius, Vect offset) {
+            return new CircleShape(CP.CircleShapeInit(Handle, body.Handle, radius, offset));
+        }
+
+        public static Shape New(Body body, double radius, Vect offset) {
+            return new Shape(CP.CircleShapeNew(body.Handle, radius, offset));
+        }
+
         public void SetOffset(Vect offset) {
-            CP.CircleShapeSetOffset(shape, offset);
+            CP.CircleShapeSetOffset(Handle, offset);
         }
 
-        // CP_EXPORT void cpCircleShapeSetRadius(cpShape *shape, cpFloat radius);
         public void SetRadius(double radius) {
-            CP.CircleShapeSetRadius(shape, radius);
+            CP.CircleShapeSetRadius(Handle, radius);
         }
 
     }

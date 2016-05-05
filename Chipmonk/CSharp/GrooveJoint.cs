@@ -3,41 +3,47 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class GrooveJoint {
-        public IntPtr constraint { get; set; }
-
-        public GrooveJoint(IntPtr a, IntPtr b, Vect groove_a, Vect groove_b, Vect anchorB) {
-            constraint = CP.GrooveJointNew(a, b, groove_a, groove_b, anchorB);
+    public class GrooveJoint : Constraint {
+        public GrooveJoint(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) : base(CP.GrooveJointNew(a.Handle, b.Handle, groove_a, groove_b, anchorB)) {
         }
 
-        // CP_EXPORT cpVect cpGrooveJointGetAnchorB(const cpConstraint *constraint);
+        public GrooveJoint(IntPtr handle) : base(handle) {
+        }
+
+        public static GrooveJoint Alloc() {
+            return new GrooveJoint(CP.GrooveJointAlloc());
+        }
+
         public Vect GetAnchorB() {
-            return CP.GrooveJointGetAnchorB(constraint);
+            return CP.GrooveJointGetAnchorB(Handle);
         }
 
-        // CP_EXPORT cpVect cpGrooveJointGetGrooveA(const cpConstraint *constraint);
         public Vect GetGrooveA() {
-            return CP.GrooveJointGetGrooveA(constraint);
+            return CP.GrooveJointGetGrooveA(Handle);
         }
 
-        // CP_EXPORT cpVect cpGrooveJointGetGrooveB(const cpConstraint *constraint);
         public Vect GetGrooveB() {
-            return CP.GrooveJointGetGrooveB(constraint);
+            return CP.GrooveJointGetGrooveB(Handle);
         }
 
-        // CP_EXPORT void cpGrooveJointSetAnchorB(cpConstraint *constraint, cpVect anchorB);
+        public GrooveJoint Init(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
+            return new GrooveJoint(CP.GrooveJointInit(Handle, a.Handle, b.Handle, groove_a, groove_b, anchorB));
+        }
+
+        public static Constraint New(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
+            return new Constraint(CP.GrooveJointNew(a.Handle, b.Handle, groove_a, groove_b, anchorB));
+        }
+
         public void SetAnchorB(Vect anchorB) {
-            CP.GrooveJointSetAnchorB(constraint, anchorB);
+            CP.GrooveJointSetAnchorB(Handle, anchorB);
         }
 
-        // CP_EXPORT void cpGrooveJointSetGrooveA(cpConstraint *constraint, cpVect grooveA);
         public void SetGrooveA(Vect grooveA) {
-            CP.GrooveJointSetGrooveA(constraint, grooveA);
+            CP.GrooveJointSetGrooveA(Handle, grooveA);
         }
 
-        // CP_EXPORT void cpGrooveJointSetGrooveB(cpConstraint *constraint, cpVect grooveB);
         public void SetGrooveB(Vect grooveB) {
-            CP.GrooveJointSetGrooveB(constraint, grooveB);
+            CP.GrooveJointSetGrooveB(Handle, grooveB);
         }
 
     }

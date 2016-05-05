@@ -4,126 +4,114 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Shape {
-        public IntPtr shape { get; set; }
+        public IntPtr Handle { get; set; }
 
-        // CP_EXPORT cpBB cpShapeCacheBB(cpShape *shape);
+        public Shape(IntPtr handle) {
+            Handle = handle;
+        }
+
         public BB CacheBB() {
-            return CP.ShapeCacheBB(shape);
+            return CP.ShapeCacheBB(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetArea(cpShape *shape);
+        public void Destroy() {
+            CP.ShapeDestroy(Handle);
+        }
+
+        public void Free() {
+            CP.ShapeFree(Handle);
+        }
+
         public double GetArea() {
-            return CP.ShapeGetArea(shape);
+            return CP.ShapeGetArea(Handle);
         }
 
-        // CP_EXPORT cpBB cpShapeGetBB(const cpShape *shape);
         public BB GetBB() {
-            return CP.ShapeGetBB(shape);
+            return CP.ShapeGetBB(Handle);
         }
 
-        // CP_EXPORT cpBody* cpShapeGetBody(const cpShape *shape);
-        public IntPtr GetBody() {
-            return CP.ShapeGetBody(shape);
+        public Body GetBody() {
+            return new Body(CP.ShapeGetBody(Handle));
         }
 
-        // CP_EXPORT cpVect cpShapeGetCenterOfGravity(cpShape *shape);
         public Vect GetCenterOfGravity() {
-            return CP.ShapeGetCenterOfGravity(shape);
+            return CP.ShapeGetCenterOfGravity(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetDensity(cpShape *shape);
         public double GetDensity() {
-            return CP.ShapeGetDensity(shape);
+            return CP.ShapeGetDensity(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetElasticity(const cpShape *shape);
         public double GetElasticity() {
-            return CP.ShapeGetElasticity(shape);
+            return CP.ShapeGetElasticity(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetFriction(const cpShape *shape);
         public double GetFriction() {
-            return CP.ShapeGetFriction(shape);
+            return CP.ShapeGetFriction(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetMass(cpShape *shape);
         public double GetMass() {
-            return CP.ShapeGetMass(shape);
+            return CP.ShapeGetMass(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapeGetMoment(cpShape *shape);
         public double GetMoment() {
-            return CP.ShapeGetMoment(shape);
+            return CP.ShapeGetMoment(Handle);
         }
 
-        // CP_EXPORT cpBool cpShapeGetSensor(const cpShape *shape);
         public bool GetSensor() {
-            return CP.ShapeGetSensor(shape);
+            return CP.ShapeGetSensor(Handle);
         }
 
-        // CP_EXPORT cpSpace* cpShapeGetSpace(const cpShape *shape);
-        public IntPtr GetSpace() {
-            return CP.ShapeGetSpace(shape);
+        public Space GetSpace() {
+            return new Space(CP.ShapeGetSpace(Handle));
         }
 
-        // CP_EXPORT cpVect cpShapeGetSurfaceVelocity(const cpShape *shape);
         public Vect GetSurfaceVelocity() {
-            return CP.ShapeGetSurfaceVelocity(shape);
+            return CP.ShapeGetSurfaceVelocity(Handle);
         }
 
-        // CP_EXPORT cpDataPointer cpShapeGetUserData(const cpShape *shape);
         public IntPtr GetUserData() {
-            return CP.ShapeGetUserData(shape);
+            return CP.ShapeGetUserData(Handle);
         }
 
-        // CP_EXPORT cpFloat cpShapePointQuery(const cpShape *shape, cpVect p, cpPointQueryInfo *out);
         public double PointQuery(Vect p, IntPtr output) {
-            return CP.ShapePointQuery(shape, p, output);
+            return CP.ShapePointQuery(Handle, p, output);
         }
 
-        // CP_EXPORT cpBool cpShapeSegmentQuery(const cpShape *shape, cpVect a, cpVect b, cpFloat radius, cpSegmentQueryInfo *info);
         public bool SegmentQuery(Vect a, Vect b, double radius, IntPtr info) {
-            return CP.ShapeSegmentQuery(shape, a, b, radius, info);
+            return CP.ShapeSegmentQuery(Handle, a, b, radius, info);
         }
 
-        // CP_EXPORT void cpShapeSetBody(cpShape *shape, cpBody *body);
-        public void SetBody(IntPtr body) {
-            CP.ShapeSetBody(shape, body);
+        public void SetBody(Body body) {
+            CP.ShapeSetBody(Handle, body.Handle);
         }
 
-        // CP_EXPORT void cpShapeSetDensity(cpShape *shape, cpFloat density);
         public void SetDensity(double density) {
-            CP.ShapeSetDensity(shape, density);
+            CP.ShapeSetDensity(Handle, density);
         }
 
-        // CP_EXPORT void cpShapeSetElasticity(cpShape *shape, cpFloat elasticity);
         public void SetElasticity(double elasticity) {
-            CP.ShapeSetElasticity(shape, elasticity);
+            CP.ShapeSetElasticity(Handle, elasticity);
         }
 
-        // CP_EXPORT void cpShapeSetFriction(cpShape *shape, cpFloat friction);
         public void SetFriction(double friction) {
-            CP.ShapeSetFriction(shape, friction);
+            CP.ShapeSetFriction(Handle, friction);
         }
 
-        // CP_EXPORT void cpShapeSetMass(cpShape *shape, cpFloat mass);
         public void SetMass(double mass) {
-            CP.ShapeSetMass(shape, mass);
+            CP.ShapeSetMass(Handle, mass);
         }
 
-        // CP_EXPORT void cpShapeSetSensor(cpShape *shape, cpBool sensor);
         public void SetSensor(bool sensor) {
-            CP.ShapeSetSensor(shape, sensor);
+            CP.ShapeSetSensor(Handle, sensor);
         }
 
-        // CP_EXPORT void cpShapeSetSurfaceVelocity(cpShape *shape, cpVect surfaceVelocity);
         public void SetSurfaceVelocity(Vect surfaceVelocity) {
-            CP.ShapeSetSurfaceVelocity(shape, surfaceVelocity);
+            CP.ShapeSetSurfaceVelocity(Handle, surfaceVelocity);
         }
 
-        // CP_EXPORT void cpShapeSetUserData(cpShape *shape, cpDataPointer userData);
         public void SetUserData(IntPtr userData) {
-            CP.ShapeSetUserData(shape, userData);
+            CP.ShapeSetUserData(Handle, userData);
         }
 
     }

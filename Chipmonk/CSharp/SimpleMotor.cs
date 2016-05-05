@@ -4,19 +4,35 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class SimpleMotor {
-        public IntPtr motor { get; set; }
+        public IntPtr Handle { get; set; }
 
-        public SimpleMotor(IntPtr a, IntPtr b, double rate) {
-            motor = CP.SimpleMotorNew(a, b, rate);
+        public SimpleMotor(Body a, Body b, double rate) {
+            Handle = CP.SimpleMotorNew(a.Handle, b.Handle, rate);
         }
 
-        // CP_EXPORT cpFloat cpSimpleMotorGetRate(const cpConstraint *constraint);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpGetRate")]
-        public static extern double GetRate(IntPtr constraint);
+        public SimpleMotor(IntPtr handle) {
+            Handle = handle;
+        }
 
-        // CP_EXPORT void cpSimpleMotorSetRate(cpConstraint *constraint, cpFloat rate);
-        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSetRate")]
-        public static extern void SetRate(IntPtr constraint, double rate);
+        public static SimpleMotor Alloc() {
+            return new SimpleMotor(CP.SimpleMotorAlloc());
+        }
+
+        public static double GetRate(Constraint constraint) {
+            return CP.SimpleMotorGetRate(constraint.Handle);
+        }
+
+        public SimpleMotor Init(Body a, Body b, double rate) {
+            return new SimpleMotor(CP.SimpleMotorInit(Handle, a.Handle, b.Handle, rate));
+        }
+
+        public static Constraint New(Body a, Body b, double rate) {
+            return new Constraint(CP.SimpleMotorNew(a.Handle, b.Handle, rate));
+        }
+
+        public static void SetRate(Constraint constraint, double rate) {
+            CP.SimpleMotorSetRate(constraint.Handle, rate);
+        }
 
     }
 }

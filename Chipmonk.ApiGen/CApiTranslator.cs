@@ -17,6 +17,8 @@ namespace Chipmonk.ApiGen {
                 }
             }
 
+            methods = methods.OrderBy((meth) => meth.Name).ToList();
+
             var file = new CsFile() {
                 Name = "CP",
                 UsingStatements = new List<UsingStatement>() {
@@ -43,6 +45,9 @@ namespace Chipmonk.ApiGen {
 
         private Method TranslateFunction(Function function) {
             return new Method() {
+                Comments = new List<string>() {
+                    function.OriginalLine
+                },
                 Attributes = new List<CsAttribute>() {
                     new CsAttribute() {
                         Name = "DllImport",
@@ -56,9 +61,9 @@ namespace Chipmonk.ApiGen {
                     }
                 },
                 ReturnType = ConvertType(function.ReturnType),
-                Name = function.Name,
-                Arguments = function.Arguments
-                                    .Select(arg => new Argument() {
+                Name = function.Name.Substring(2),
+                Parameters = function.Parameters
+                                    .Select(arg => new Parameter() {
                                                        Type = ConvertType(arg.Type),
                                                        Name = GetSafeArgumentName(arg.Name)
                                                    })

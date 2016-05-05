@@ -3,51 +3,55 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class SlideJoint {
-        public IntPtr constraint { get; set; }
-
-        public SlideJoint(IntPtr a, IntPtr b, Vect anchorA, Vect anchorB, double min, double max) {
-            constraint = CP.SlideJointNew(a, b, anchorA, anchorB, min, max);
+    public class SlideJoint : Constraint {
+        public SlideJoint(Body a, Body b, Vect anchorA, Vect anchorB, double min, double max) : base(CP.SlideJointNew(a.Handle, b.Handle, anchorA, anchorB, min, max)) {
         }
 
-        // CP_EXPORT cpVect cpSlideJointGetAnchorA(const cpConstraint *constraint);
+        public SlideJoint(IntPtr handle) : base(handle) {
+        }
+
+        public static SlideJoint Alloc() {
+            return new SlideJoint(CP.SlideJointAlloc());
+        }
+
         public Vect GetAnchorA() {
-            return CP.SlideJointGetAnchorA(constraint);
+            return CP.SlideJointGetAnchorA(Handle);
         }
 
-        // CP_EXPORT cpVect cpSlideJointGetAnchorB(const cpConstraint *constraint);
         public Vect GetAnchorB() {
-            return CP.SlideJointGetAnchorB(constraint);
+            return CP.SlideJointGetAnchorB(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSlideJointGetMax(const cpConstraint *constraint);
         public double GetMax() {
-            return CP.SlideJointGetMax(constraint);
+            return CP.SlideJointGetMax(Handle);
         }
 
-        // CP_EXPORT cpFloat cpSlideJointGetMin(const cpConstraint *constraint);
         public double GetMin() {
-            return CP.SlideJointGetMin(constraint);
+            return CP.SlideJointGetMin(Handle);
         }
 
-        // CP_EXPORT void cpSlideJointSetAnchorA(cpConstraint *constraint, cpVect anchorA);
+        public SlideJoint Init(Body a, Body b, Vect anchorA, Vect anchorB, double min, double max) {
+            return new SlideJoint(CP.SlideJointInit(Handle, a.Handle, b.Handle, anchorA, anchorB, min, max));
+        }
+
+        public static Constraint New(Body a, Body b, Vect anchorA, Vect anchorB, double min, double max) {
+            return new Constraint(CP.SlideJointNew(a.Handle, b.Handle, anchorA, anchorB, min, max));
+        }
+
         public void SetAnchorA(Vect anchorA) {
-            CP.SlideJointSetAnchorA(constraint, anchorA);
+            CP.SlideJointSetAnchorA(Handle, anchorA);
         }
 
-        // CP_EXPORT void cpSlideJointSetAnchorB(cpConstraint *constraint, cpVect anchorB);
         public void SetAnchorB(Vect anchorB) {
-            CP.SlideJointSetAnchorB(constraint, anchorB);
+            CP.SlideJointSetAnchorB(Handle, anchorB);
         }
 
-        // CP_EXPORT void cpSlideJointSetMax(cpConstraint *constraint, cpFloat max);
         public void SetMax(double max) {
-            CP.SlideJointSetMax(constraint, max);
+            CP.SlideJointSetMax(Handle, max);
         }
 
-        // CP_EXPORT void cpSlideJointSetMin(cpConstraint *constraint, cpFloat min);
         public void SetMin(double min) {
-            CP.SlideJointSetMin(constraint, min);
+            CP.SlideJointSetMin(Handle, min);
         }
 
     }

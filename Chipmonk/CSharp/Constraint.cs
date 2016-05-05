@@ -4,126 +4,114 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Constraint {
-        public IntPtr constraint { get; set; }
+        public IntPtr Handle { get; set; }
 
-        // CP_EXPORT cpBody* cpConstraintGetBodyA(const cpConstraint *constraint);
-        public IntPtr GetBodyA() {
-            return CP.ConstraintGetBodyA(constraint);
+        public Constraint(IntPtr handle) {
+            Handle = handle;
         }
 
-        // CP_EXPORT cpBody* cpConstraintGetBodyB(const cpConstraint *constraint);
-        public IntPtr GetBodyB() {
-            return CP.ConstraintGetBodyB(constraint);
+        public void Destroy() {
+            CP.ConstraintDestroy(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintGetCollideBodies(const cpConstraint *constraint);
+        public void Free() {
+            CP.ConstraintFree(Handle);
+        }
+
+        public Body GetBodyA() {
+            return new Body(CP.ConstraintGetBodyA(Handle));
+        }
+
+        public Body GetBodyB() {
+            return new Body(CP.ConstraintGetBodyB(Handle));
+        }
+
         public bool GetCollideBodies() {
-            return CP.ConstraintGetCollideBodies(constraint);
+            return CP.ConstraintGetCollideBodies(Handle);
         }
 
-        // CP_EXPORT cpFloat cpConstraintGetErrorBias(const cpConstraint *constraint);
         public double GetErrorBias() {
-            return CP.ConstraintGetErrorBias(constraint);
+            return CP.ConstraintGetErrorBias(Handle);
         }
 
-        // CP_EXPORT cpFloat cpConstraintGetImpulse(cpConstraint *constraint);
         public double GetImpulse() {
-            return CP.ConstraintGetImpulse(constraint);
+            return CP.ConstraintGetImpulse(Handle);
         }
 
-        // CP_EXPORT cpFloat cpConstraintGetMaxBias(const cpConstraint *constraint);
         public double GetMaxBias() {
-            return CP.ConstraintGetMaxBias(constraint);
+            return CP.ConstraintGetMaxBias(Handle);
         }
 
-        // CP_EXPORT cpFloat cpConstraintGetMaxForce(const cpConstraint *constraint);
         public double GetMaxForce() {
-            return CP.ConstraintGetMaxForce(constraint);
+            return CP.ConstraintGetMaxForce(Handle);
         }
 
-        // CP_EXPORT cpSpace* cpConstraintGetSpace(const cpConstraint *constraint);
-        public IntPtr GetSpace() {
-            return CP.ConstraintGetSpace(constraint);
+        public Space GetSpace() {
+            return new Space(CP.ConstraintGetSpace(Handle));
         }
 
-        // CP_EXPORT cpDataPointer cpConstraintGetUserData(const cpConstraint *constraint);
         public IntPtr GetUserData() {
-            return CP.ConstraintGetUserData(constraint);
+            return CP.ConstraintGetUserData(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsDampedRotarySpring(const cpConstraint *constraint);
         public bool IsDampedRotarySpring() {
-            return CP.ConstraintIsDampedRotarySpring(constraint);
+            return CP.ConstraintIsDampedRotarySpring(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsDampedSpring(const cpConstraint *constraint);
         public bool IsDampedSpring() {
-            return CP.ConstraintIsDampedSpring(constraint);
+            return CP.ConstraintIsDampedSpring(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsGearJoint(const cpConstraint *constraint);
         public bool IsGearJoint() {
-            return CP.ConstraintIsGearJoint(constraint);
+            return CP.ConstraintIsGearJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsGrooveJoint(const cpConstraint *constraint);
         public bool IsGrooveJoint() {
-            return CP.ConstraintIsGrooveJoint(constraint);
+            return CP.ConstraintIsGrooveJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsPinJoint(const cpConstraint *constraint);
         public bool IsPinJoint() {
-            return CP.ConstraintIsPinJoint(constraint);
+            return CP.ConstraintIsPinJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsPivotJoint(const cpConstraint *constraint);
         public bool IsPivotJoint() {
-            return CP.ConstraintIsPivotJoint(constraint);
+            return CP.ConstraintIsPivotJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsRatchetJoint(const cpConstraint *constraint);
         public bool IsRatchetJoint() {
-            return CP.ConstraintIsRatchetJoint(constraint);
+            return CP.ConstraintIsRatchetJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsRotaryLimitJoint(const cpConstraint *constraint);
         public bool IsRotaryLimitJoint() {
-            return CP.ConstraintIsRotaryLimitJoint(constraint);
+            return CP.ConstraintIsRotaryLimitJoint(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsSimpleMotor(const cpConstraint *constraint);
         public bool IsSimpleMotor() {
-            return CP.ConstraintIsSimpleMotor(constraint);
+            return CP.ConstraintIsSimpleMotor(Handle);
         }
 
-        // CP_EXPORT cpBool cpConstraintIsSlideJoint(const cpConstraint *constraint);
         public bool IsSlideJoint() {
-            return CP.ConstraintIsSlideJoint(constraint);
+            return CP.ConstraintIsSlideJoint(Handle);
         }
 
-        // CP_EXPORT void cpConstraintSetCollideBodies(cpConstraint *constraint, cpBool collideBodies);
         public void SetCollideBodies(bool collideBodies) {
-            CP.ConstraintSetCollideBodies(constraint, collideBodies);
+            CP.ConstraintSetCollideBodies(Handle, collideBodies);
         }
 
-        // CP_EXPORT void cpConstraintSetErrorBias(cpConstraint *constraint, cpFloat errorBias);
         public void SetErrorBias(double errorBias) {
-            CP.ConstraintSetErrorBias(constraint, errorBias);
+            CP.ConstraintSetErrorBias(Handle, errorBias);
         }
 
-        // CP_EXPORT void cpConstraintSetMaxBias(cpConstraint *constraint, cpFloat maxBias);
         public void SetMaxBias(double maxBias) {
-            CP.ConstraintSetMaxBias(constraint, maxBias);
+            CP.ConstraintSetMaxBias(Handle, maxBias);
         }
 
-        // CP_EXPORT void cpConstraintSetMaxForce(cpConstraint *constraint, cpFloat maxForce);
         public void SetMaxForce(double maxForce) {
-            CP.ConstraintSetMaxForce(constraint, maxForce);
+            CP.ConstraintSetMaxForce(Handle, maxForce);
         }
 
-        // CP_EXPORT void cpConstraintSetUserData(cpConstraint *constraint, cpDataPointer userData);
         public void SetUserData(IntPtr userData) {
-            CP.ConstraintSetUserData(constraint, userData);
+            CP.ConstraintSetUserData(Handle, userData);
         }
 
     }

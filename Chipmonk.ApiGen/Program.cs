@@ -2,72 +2,58 @@
 using System.Collections.Generic;
 using System.IO;
 using Chipmonk.ApiGen.C;
+using Chipmonk.ApiGen.Models;
 
 namespace Chipmonk.ApiGen {
     public static class Program {
         public static void Main(string[] args) {
             var includeDirectory = @"C:\Users\barsae\Dropbox\code\Chipmunk2D\include\chipmunk";
             var cApiOutputFile = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CApi\CP.cs";
-            //var cSharpApiOutputDirectory = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CSharp";
+            var cSharpApiOutputDirectory = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CSharp";
 
             var reader = new HeaderFileReader();
-            var translator = new CApiTranslator();
+            var cApiTranslator = new CApiTranslator();
             var code = new CodeBuilder();
             var writer = new CSharpWriter();
 
             var originalFunctions = reader.ReadFunctionsFromDirectory(includeDirectory);
 
-            var cApi = translator.TranslateFunctions(originalFunctions);
+            var cApi = cApiTranslator.TranslateFunctions(originalFunctions);
             writer.Write(code, cApi);
-
             File.WriteAllText(cApiOutputFile, code.ToString());
 
-            //var translater = new CToCSharpFunctionTranslator();
-            //var api = new ApiBuilder();
-            //var writer = new CSharpBuilder();
+            var cSharpTranslator = new CSharpTranslator();
 
-            //writer.AddUsings("System", "System.Runtime.InteropServices");
-            //writer.StartNamespace("Chipmonk.CApi");
-            //writer.StartStaticClass("CP");
+            cSharpTranslator.Classes.Add(new Class() { Name = "Arbiter" });
+            cSharpTranslator.Classes.Add(new Class() { Name = "BBTree" });
+            cSharpTranslator.Classes.Add(new Class() { Name = "Body" });
+            cSharpTranslator.Classes.Add(new Class() { Name = "Space" });
+            cSharpTranslator.Classes.Add(new Class() { Name = "SimpleMotor" });
 
-            //api.SetNamespace("Chipmonk.CSharp");
-            //api.AddClass("Arbiter", "arb");
-            //api.AddClass("Body", "body");
-            //api.AddClass("CircleShape", "shape");
-            //api.AddClass("Constraint", "constraint");
-            //api.AddClass("DampedRotarySpring", "constraint");
-            //api.AddClass("GearJoint", "constraint");
-            //api.AddClass("GrooveJoint", "constraint");
-            //api.AddClass("PinJoint", "constraint");
-            //api.AddClass("PivotJoint", "constraint");
-            //api.AddClass("Polyline", "line");
-            //api.AddClass("PolylineSet", "set");
-            //api.AddClass("PolyShape", "shape");
-            //api.AddClass("RatchetJoint", "constraint");
-            //api.AddClass("RotaryJoint", "constraint");
-            //api.AddClass("SegmentShape", "shape");
-            //api.AddClass("Shape", "shape");
-            //api.AddClass("SimpleMotor", "motor");
-            //api.AddClass("SlideJoint", "constraint");
-            //api.AddClass("Space", "space");
+            var shape = new Class() { Name = "Shape" };
+            cSharpTranslator.Classes.Add(shape);
+            cSharpTranslator.Classes.Add(new Class() { Name = "CircleShape", Parent = shape });
+            cSharpTranslator.Classes.Add(new Class() { Name = "Polyline", Parent = shape });
+            cSharpTranslator.Classes.Add(new Class() { Name = "PolylineSet", Parent = shape });
+            cSharpTranslator.Classes.Add(new Class() { Name = "PolyShape", Parent = shape });
+            cSharpTranslator.Classes.Add(new Class() { Name = "SegmentShape", Parent = shape });
 
-            //foreach (var originalFunction in originalFunctions.OrderBy(f => f.FunctionName)) {
-            //    try {
-            //        var translatedFunction = translater.TranslateFunction(originalFunction);
-            //        translatedFunction.FunctionName = translatedFunction.FunctionName.Substring(2);
-            //        writer.AddExternalFunction(translatedFunction);
-            //        //api.AddFunction(originalFunction);
-            //    } catch (SkipExportingFunction skip) {
-            //        Console.WriteLine("Failed to export function:\n{0}\n{1}", originalFunction.OriginalLine, skip.Message);
-            //    }
-            //}
+            var constraint = new Class() { Name = "Constraint" };
+            cSharpTranslator.Classes.Add(constraint);
+            cSharpTranslator.Classes.Add(new Class() { Name = "DampedSpring", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "DampedRotarySpring", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "GearJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "GrooveJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "PinJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "PivotJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "RatchetJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "RotaryLimitJoint", Parent = constraint });
+            cSharpTranslator.Classes.Add(new Class() { Name = "SlideJoint", Parent = constraint });
 
-            //writer.End();
-            //writer.End();
+            var cSharp = cSharpTranslator.ConstructApi(originalFunctions);
+            cSharp.Name = cSharpApiOutputDirectory;
+            writer.Write(cSharp);
 
-            //api.WriteToDirectory(cSharpApiOutputDirectory);
-
-            //File.WriteAllText(cApiOutputFile, writer.ToString());
             Console.WriteLine("Done");
             Console.ReadKey(true);
         }
