@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Chipmonk.CApi {
     public struct BB {
-        public double l;
-        public double b;
-        public double r;
-        public double t;
+        public double L;
+        public double B;
+        public double R;
+        public double T;
     }
 }

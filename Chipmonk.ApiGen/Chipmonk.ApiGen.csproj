@@ -44,17 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiBuilder.cs" />
-    <Compile Include="CSharpTranslator.cs" />
     <Compile Include="CSharpWriter.cs" />
     <Compile Include="C\HeaderFileReader.cs" />
-    <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Constructor.cs" />
     <Compile Include="Models\CsAttribute.cs" />
-    <Compile Include="Models\NamedArgument.cs" />
     <Compile Include="Models\CsDirectory.cs" />
     <Compile Include="Models\CsFile.cs" />
     <Compile Include="Models\Expression.cs" />
+    <Compile Include="Models\Parameter.cs" />
+    <Compile Include="Models\NamedArgument.cs" />
     <Compile Include="Models\Method.cs" />
     <Compile Include="Models\NamespaceBlock.cs" />
     <Compile Include="Models\Property.cs" />

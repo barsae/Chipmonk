@@ -42,7 +42,12 @@
   <ItemGroup>
     <Compile Include="CApi\BodyType.cs" />
     <Compile Include="CApi\BB.cs" />
+    <Compile Include="CApi\CollisionHandler.cs" />
+    <Compile Include="CApi\ContactPointSet.cs" />
     <Compile Include="CApi\CP.cs" />
+    <Compile Include="CApi\Delegates.cs" />
+    <Compile Include="CApi\ShapeFilter.cs" />
+    <Compile Include="CApi\Transform.cs" />
     <Compile Include="CApi\Vect.cs" />
     <Compile Include="CSharp\Arbiter.cs" />
     <Compile Include="CSharp\BBTree.cs" />

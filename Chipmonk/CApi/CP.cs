@@ -39,6 +39,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetBodies")]
         public static extern void ArbiterGetBodies(IntPtr arb, IntPtr a, IntPtr b);
 
+        // CP_EXPORT cpContactPointSet cpArbiterGetContactPointSet(const cpArbiter *arb);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetContactPointSet")]
+        public static extern ContactPointSet ArbiterGetContactPointSet(IntPtr arb);
+
         // CP_EXPORT int cpArbiterGetCount(const cpArbiter *arb);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetCount")]
         public static extern int ArbiterGetCount(IntPtr arb);
@@ -135,9 +139,21 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBBTreeAlloc")]
         public static extern IntPtr BBTreeAlloc();
 
+        // CP_EXPORT cpSpatialIndex* cpBBTreeInit(cpBBTree *tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBBTreeInit")]
+        public static extern IntPtr BBTreeInit(IntPtr tree, IntPtr bbfunc, IntPtr staticIndex);
+
+        // CP_EXPORT cpSpatialIndex* cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBBTreeNew")]
+        public static extern IntPtr BBTreeNew(IntPtr bbfunc, IntPtr staticIndex);
+
         // CP_EXPORT void cpBBTreeOptimize(cpSpatialIndex *index);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBBTreeOptimize")]
         public static extern void BBTreeOptimize(IntPtr index);
+
+        // CP_EXPORT void cpBBTreeSetVelocityFunc(cpSpatialIndex *index, cpBBTreeVelocityFunc func);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBBTreeSetVelocityFunc")]
+        public static extern void BBTreeSetVelocityFunc(IntPtr index, IntPtr func);
 
         // CP_EXPORT void cpBodyActivate(cpBody *body);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyActivate")]
@@ -170,6 +186,18 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpBodyDestroy(cpBody *body);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyDestroy")]
         public static extern void BodyDestroy(IntPtr body);
+
+        // CP_EXPORT void cpBodyEachArbiter(cpBody *body, cpBodyArbiterIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyEachArbiter")]
+        public static extern void BodyEachArbiter(IntPtr body, IntPtr func, IntPtr data);
+
+        // CP_EXPORT void cpBodyEachConstraint(cpBody *body, cpBodyConstraintIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyEachConstraint")]
+        public static extern void BodyEachConstraint(IntPtr body, IntPtr func, IntPtr data);
+
+        // CP_EXPORT void cpBodyEachShape(cpBody *body, cpBodyShapeIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyEachShape")]
+        public static extern void BodyEachShape(IntPtr body, IntPtr func, IntPtr data);
 
         // CP_EXPORT void cpBodyFree(cpBody *body);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodyFree")]
@@ -291,6 +319,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySetPosition")]
         public static extern void BodySetPosition(IntPtr body, Vect pos);
 
+        // CP_EXPORT void cpBodySetPositionUpdateFunc(cpBody *body, cpBodyPositionFunc positionFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySetPositionUpdateFunc")]
+        public static extern void BodySetPositionUpdateFunc(IntPtr body, IntPtr positionFunc);
+
         // CP_EXPORT void cpBodySetTorque(cpBody *body, cpFloat torque);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySetTorque")]
         public static extern void BodySetTorque(IntPtr body, double torque);
@@ -306,6 +338,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpBodySetVelocity(cpBody *body, cpVect velocity);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySetVelocity")]
         public static extern void BodySetVelocity(IntPtr body, Vect velocity);
+
+        // CP_EXPORT void cpBodySetVelocityUpdateFunc(cpBody *body, cpBodyVelocityFunc velocityFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySetVelocityUpdateFunc")]
+        public static extern void BodySetVelocityUpdateFunc(IntPtr body, IntPtr velocityFunc);
 
         // CP_EXPORT void cpBodySleep(cpBody *body);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpBodySleep")]
@@ -411,6 +447,14 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintGetMaxForce")]
         public static extern double ConstraintGetMaxForce(IntPtr constraint);
 
+        // CP_EXPORT cpConstraintPostSolveFunc cpConstraintGetPostSolveFunc(const cpConstraint *constraint);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintGetPostSolveFunc")]
+        public static extern IntPtr ConstraintGetPostSolveFunc(IntPtr constraint);
+
+        // CP_EXPORT cpConstraintPreSolveFunc cpConstraintGetPreSolveFunc(const cpConstraint *constraint);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintGetPreSolveFunc")]
+        public static extern IntPtr ConstraintGetPreSolveFunc(IntPtr constraint);
+
         // CP_EXPORT cpSpace* cpConstraintGetSpace(const cpConstraint *constraint);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintGetSpace")]
         public static extern IntPtr ConstraintGetSpace(IntPtr constraint);
@@ -475,6 +519,14 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintSetMaxForce")]
         public static extern void ConstraintSetMaxForce(IntPtr constraint, double maxForce);
 
+        // CP_EXPORT void cpConstraintSetPostSolveFunc(cpConstraint *constraint, cpConstraintPostSolveFunc postSolveFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintSetPostSolveFunc")]
+        public static extern void ConstraintSetPostSolveFunc(IntPtr constraint, IntPtr postSolveFunc);
+
+        // CP_EXPORT void cpConstraintSetPreSolveFunc(cpConstraint *constraint, cpConstraintPreSolveFunc preSolveFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintSetPreSolveFunc")]
+        public static extern void ConstraintSetPreSolveFunc(IntPtr constraint, IntPtr preSolveFunc);
+
         // CP_EXPORT void cpConstraintSetUserData(cpConstraint *constraint, cpDataPointer userData);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpConstraintSetUserData")]
         public static extern void ConstraintSetUserData(IntPtr constraint, IntPtr userData);
@@ -495,6 +547,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringGetRestAngle")]
         public static extern double DampedRotarySpringGetRestAngle(IntPtr constraint);
 
+        // CP_EXPORT cpDampedRotarySpringTorqueFunc cpDampedRotarySpringGetSpringTorqueFunc(const cpConstraint *constraint);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringGetSpringTorqueFunc")]
+        public static extern IntPtr DampedRotarySpringGetSpringTorqueFunc(IntPtr constraint);
+
         // CP_EXPORT cpFloat cpDampedRotarySpringGetStiffness(const cpConstraint *constraint);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringGetStiffness")]
         public static extern double DampedRotarySpringGetStiffness(IntPtr constraint);
@@ -514,6 +570,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpDampedRotarySpringSetRestAngle(cpConstraint *constraint, cpFloat restAngle);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringSetRestAngle")]
         public static extern void DampedRotarySpringSetRestAngle(IntPtr constraint, double restAngle);
+
+        // CP_EXPORT void cpDampedRotarySpringSetSpringTorqueFunc(cpConstraint *constraint, cpDampedRotarySpringTorqueFunc springTorqueFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringSetSpringTorqueFunc")]
+        public static extern void DampedRotarySpringSetSpringTorqueFunc(IntPtr constraint, IntPtr springTorqueFunc);
 
         // CP_EXPORT void cpDampedRotarySpringSetStiffness(cpConstraint *constraint, cpFloat stiffness);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedRotarySpringSetStiffness")]
@@ -538,6 +598,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT cpFloat cpDampedSpringGetRestLength(const cpConstraint *constraint);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringGetRestLength")]
         public static extern double DampedSpringGetRestLength(IntPtr constraint);
+
+        // CP_EXPORT cpDampedSpringForceFunc cpDampedSpringGetSpringForceFunc(const cpConstraint *constraint);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringGetSpringForceFunc")]
+        public static extern IntPtr DampedSpringGetSpringForceFunc(IntPtr constraint);
 
         // CP_EXPORT cpFloat cpDampedSpringGetStiffness(const cpConstraint *constraint);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringGetStiffness")]
@@ -566,6 +630,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpDampedSpringSetRestLength(cpConstraint *constraint, cpFloat restLength);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringSetRestLength")]
         public static extern void DampedSpringSetRestLength(IntPtr constraint, double restLength);
+
+        // CP_EXPORT void cpDampedSpringSetSpringForceFunc(cpConstraint *constraint, cpDampedSpringForceFunc springForceFunc);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringSetSpringForceFunc")]
+        public static extern void DampedSpringSetSpringForceFunc(IntPtr constraint, IntPtr springForceFunc);
 
         // CP_EXPORT void cpDampedSpringSetStiffness(cpConstraint *constraint, cpFloat stiffness);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpDampedSpringSetStiffness")]
@@ -645,7 +713,7 @@ namespace Chipmonk.CApi {
 
         // CP_EXPORT void cpHastySpaceSetThreads(cpSpace *space, unsigned long threads);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpHastySpaceSetThreads")]
-        public static extern void HastySpaceSetThreads(IntPtr space, UInt64 threads);
+        public static extern void HastySpaceSetThreads(IntPtr space, ulong threads);
 
         // CP_EXPORT void cpHastySpaceStep(cpSpace *space, cpFloat dt);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpHastySpaceStep")]
@@ -807,9 +875,17 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeGetVert")]
         public static extern Vect PolyShapeGetVert(IntPtr shape, int index);
 
+        // CP_EXPORT cpPolyShape* cpPolyShapeInit(cpPolyShape *poly, cpBody *body, int count, const cpVect *verts, cpTransform transform, cpFloat radius);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeInit")]
+        public static extern IntPtr PolyShapeInit(IntPtr poly, IntPtr body, int count, IntPtr verts, Transform transform, double radius);
+
         // CP_EXPORT cpPolyShape* cpPolyShapeInitRaw(cpPolyShape *poly, cpBody *body, int count, const cpVect *verts, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeInitRaw")]
         public static extern IntPtr PolyShapeInitRaw(IntPtr poly, IntPtr body, int count, IntPtr verts, double radius);
+
+        // CP_EXPORT cpShape* cpPolyShapeNew(cpBody *body, int count, const cpVect *verts, cpTransform transform, cpFloat radius);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeNew")]
+        public static extern IntPtr PolyShapeNew(IntPtr body, int count, IntPtr verts, Transform transform, double radius);
 
         // CP_EXPORT cpShape* cpPolyShapeNewRaw(cpBody *body, int count, const cpVect *verts, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeNewRaw")]
@@ -818,6 +894,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpPolyShapeSetRadius(cpShape *shape, cpFloat radius);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeSetRadius")]
         public static extern void PolyShapeSetRadius(IntPtr shape, double radius);
+
+        // CP_EXPORT void cpPolyShapeSetVerts(cpShape *shape, int count, cpVect *verts, cpTransform transform);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeSetVerts")]
+        public static extern void PolyShapeSetVerts(IntPtr shape, int count, IntPtr verts, Transform transform);
 
         // CP_EXPORT void cpPolyShapeSetVertsRaw(cpShape *shape, int count, cpVect *verts);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolyShapeSetVertsRaw")]
@@ -955,6 +1035,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetCenterOfGravity")]
         public static extern Vect ShapeGetCenterOfGravity(IntPtr shape);
 
+        // CP_EXPORT cpCollisionType cpShapeGetCollisionType(const cpShape *shape);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetCollisionType")]
+        public static extern uint ShapeGetCollisionType(IntPtr shape);
+
         // CP_EXPORT cpFloat cpShapeGetDensity(cpShape *shape);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetDensity")]
         public static extern double ShapeGetDensity(IntPtr shape);
@@ -962,6 +1046,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT cpFloat cpShapeGetElasticity(const cpShape *shape);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetElasticity")]
         public static extern double ShapeGetElasticity(IntPtr shape);
+
+        // CP_EXPORT cpShapeFilter cpShapeGetFilter(const cpShape *shape);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetFilter")]
+        public static extern ShapeFilter ShapeGetFilter(IntPtr shape);
 
         // CP_EXPORT cpFloat cpShapeGetFriction(const cpShape *shape);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeGetFriction")]
@@ -995,6 +1083,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapePointQuery")]
         public static extern double ShapePointQuery(IntPtr shape, Vect p, IntPtr output);
 
+        // CP_EXPORT cpContactPointSet cpShapesCollide(const cpShape *a, const cpShape *b);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapesCollide")]
+        public static extern ContactPointSet ShapesCollide(IntPtr a, IntPtr b);
+
         // CP_EXPORT cpBool cpShapeSegmentQuery(const cpShape *shape, cpVect a, cpVect b, cpFloat radius, cpSegmentQueryInfo *info);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSegmentQuery")]
         public static extern bool ShapeSegmentQuery(IntPtr shape, Vect a, Vect b, double radius, IntPtr info);
@@ -1003,6 +1095,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetBody")]
         public static extern void ShapeSetBody(IntPtr shape, IntPtr body);
 
+        // CP_EXPORT void cpShapeSetCollisionType(cpShape *shape, cpCollisionType collisionType);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetCollisionType")]
+        public static extern void ShapeSetCollisionType(IntPtr shape, uint collisionType);
+
         // CP_EXPORT void cpShapeSetDensity(cpShape *shape, cpFloat density);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetDensity")]
         public static extern void ShapeSetDensity(IntPtr shape, double density);
@@ -1010,6 +1106,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpShapeSetElasticity(cpShape *shape, cpFloat elasticity);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetElasticity")]
         public static extern void ShapeSetElasticity(IntPtr shape, double elasticity);
+
+        // CP_EXPORT void cpShapeSetFilter(cpShape *shape, cpShapeFilter filter);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetFilter")]
+        public static extern void ShapeSetFilter(IntPtr shape, ShapeFilter filter);
 
         // CP_EXPORT void cpShapeSetFriction(cpShape *shape, cpFloat friction);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetFriction")]
@@ -1030,6 +1130,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT void cpShapeSetUserData(cpShape *shape, cpDataPointer userData);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeSetUserData")]
         public static extern void ShapeSetUserData(IntPtr shape, IntPtr userData);
+
+        // CP_EXPORT cpBB cpShapeUpdate(cpShape *shape, cpTransform transform);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpShapeUpdate")]
+        public static extern BB ShapeUpdate(IntPtr shape, Transform transform);
 
         // CP_EXPORT cpSimpleMotor* cpSimpleMotorAlloc(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSimpleMotorAlloc")]
@@ -1099,6 +1203,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddBody")]
         public static extern IntPtr SpaceAddBody(IntPtr space, IntPtr body);
 
+        // CP_EXPORT cpCollisionHandler *cpSpaceAddCollisionHandler(cpSpace *space, cpCollisionType a, cpCollisionType b);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddCollisionHandler")]
+        public static extern IntPtr SpaceAddCollisionHandler(IntPtr space, uint a, uint b);
+
         // CP_EXPORT cpConstraint* cpSpaceAddConstraint(cpSpace *space, cpConstraint *constraint);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddConstraint")]
         public static extern IntPtr SpaceAddConstraint(IntPtr space, IntPtr constraint);
@@ -1107,13 +1215,25 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddDefaultCollisionHandler")]
         public static extern IntPtr SpaceAddDefaultCollisionHandler(IntPtr space);
 
+        // CP_EXPORT cpBool cpSpaceAddPostStepCallback(cpSpace *space, cpPostStepFunc func, void *key, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddPostStepCallback")]
+        public static extern bool SpaceAddPostStepCallback(IntPtr space, IntPtr func, IntPtr key, IntPtr data);
+
         // CP_EXPORT cpShape* cpSpaceAddShape(cpSpace *space, cpShape *shape);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddShape")]
         public static extern IntPtr SpaceAddShape(IntPtr space, IntPtr shape);
 
+        // CP_EXPORT cpCollisionHandler *cpSpaceAddWildcardHandler(cpSpace *space, cpCollisionType type);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAddWildcardHandler")]
+        public static extern IntPtr SpaceAddWildcardHandler(IntPtr space, uint type);
+
         // CP_EXPORT cpSpace* cpSpaceAlloc(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceAlloc")]
         public static extern IntPtr SpaceAlloc();
+
+        // CP_EXPORT void cpSpaceBBQuery(cpSpace *space, cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceBBQuery")]
+        public static extern void SpaceBBQuery(IntPtr space, BB bb, ShapeFilter filter, IntPtr func, IntPtr data);
 
         // CP_EXPORT cpBool cpSpaceContainsBody(cpSpace *space, cpBody *body);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceContainsBody")]
@@ -1135,6 +1255,18 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceDestroy")]
         public static extern void SpaceDestroy(IntPtr space);
 
+        // CP_EXPORT void cpSpaceEachBody(cpSpace *space, cpSpaceBodyIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceEachBody")]
+        public static extern void SpaceEachBody(IntPtr space, IntPtr func, IntPtr data);
+
+        // CP_EXPORT void cpSpaceEachConstraint(cpSpace *space, cpSpaceConstraintIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceEachConstraint")]
+        public static extern void SpaceEachConstraint(IntPtr space, IntPtr func, IntPtr data);
+
+        // CP_EXPORT void cpSpaceEachShape(cpSpace *space, cpSpaceShapeIteratorFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceEachShape")]
+        public static extern void SpaceEachShape(IntPtr space, IntPtr func, IntPtr data);
+
         // CP_EXPORT void cpSpaceFree(cpSpace *space);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceFree")]
         public static extern void SpaceFree(IntPtr space);
@@ -1142,6 +1274,10 @@ namespace Chipmonk.CApi {
         // CP_EXPORT cpFloat cpSpaceGetCollisionBias(const cpSpace *space);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceGetCollisionBias")]
         public static extern double SpaceGetCollisionBias(IntPtr space);
+
+        // CP_EXPORT cpTimestamp cpSpaceGetCollisionPersistence(const cpSpace *space);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceGetCollisionPersistence")]
+        public static extern uint SpaceGetCollisionPersistence(IntPtr space);
 
         // CP_EXPORT cpFloat cpSpaceGetCollisionSlop(const cpSpace *space);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceGetCollisionSlop")]
@@ -1183,6 +1319,14 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceHashAlloc")]
         public static extern IntPtr SpaceHashAlloc();
 
+        // CP_EXPORT cpSpatialIndex* cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceHashInit")]
+        public static extern IntPtr SpaceHashInit(IntPtr hash, double celldim, int numcells, IntPtr bbfunc, IntPtr staticIndex);
+
+        // CP_EXPORT cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceHashNew")]
+        public static extern IntPtr SpaceHashNew(double celldim, int cells, IntPtr bbfunc, IntPtr staticIndex);
+
         // CP_EXPORT void cpSpaceHashResize(cpSpaceHash *hash, cpFloat celldim, int numcells);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceHashResize")]
         public static extern void SpaceHashResize(IntPtr hash, double celldim, int numcells);
@@ -1198,6 +1342,14 @@ namespace Chipmonk.CApi {
         // CP_EXPORT cpSpace* cpSpaceNew(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceNew")]
         public static extern IntPtr SpaceNew();
+
+        // CP_EXPORT void cpSpacePointQuery(cpSpace *space, cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpSpacePointQueryFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpacePointQuery")]
+        public static extern void SpacePointQuery(IntPtr space, Vect point, double maxDistance, ShapeFilter filter, IntPtr func, IntPtr data);
+
+        // CP_EXPORT cpShape *cpSpacePointQueryNearest(cpSpace *space, cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpPointQueryInfo *out);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpacePointQueryNearest")]
+        public static extern IntPtr SpacePointQueryNearest(IntPtr space, Vect point, double maxDistance, ShapeFilter filter, IntPtr output);
 
         // CP_EXPORT void cpSpaceReindexShape(cpSpace *space, cpShape *shape);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceReindexShape")]
@@ -1223,9 +1375,21 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceRemoveShape")]
         public static extern void SpaceRemoveShape(IntPtr space, IntPtr shape);
 
+        // CP_EXPORT void cpSpaceSegmentQuery(cpSpace *space, cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSpaceSegmentQueryFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSegmentQuery")]
+        public static extern void SpaceSegmentQuery(IntPtr space, Vect start, Vect end, double radius, ShapeFilter filter, IntPtr func, IntPtr data);
+
+        // CP_EXPORT cpShape *cpSpaceSegmentQueryFirst(cpSpace *space, cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSegmentQueryInfo *out);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSegmentQueryFirst")]
+        public static extern IntPtr SpaceSegmentQueryFirst(IntPtr space, Vect start, Vect end, double radius, ShapeFilter filter, IntPtr output);
+
         // CP_EXPORT void cpSpaceSetCollisionBias(cpSpace *space, cpFloat collisionBias);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSetCollisionBias")]
         public static extern void SpaceSetCollisionBias(IntPtr space, double collisionBias);
+
+        // CP_EXPORT void cpSpaceSetCollisionPersistence(cpSpace *space, cpTimestamp collisionPersistence);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSetCollisionPersistence")]
+        public static extern void SpaceSetCollisionPersistence(IntPtr space, uint collisionPersistence);
 
         // CP_EXPORT void cpSpaceSetCollisionSlop(cpSpace *space, cpFloat collisionSlop);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSetCollisionSlop")]
@@ -1255,6 +1419,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceSetUserData")]
         public static extern void SpaceSetUserData(IntPtr space, IntPtr userData);
 
+        // CP_EXPORT cpBool cpSpaceShapeQuery(cpSpace *space, cpShape *shape, cpSpaceShapeQueryFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceShapeQuery")]
+        public static extern bool SpaceShapeQuery(IntPtr space, IntPtr shape, IntPtr func, IntPtr data);
+
         // CP_EXPORT void cpSpaceStep(cpSpace *space, cpFloat dt);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceStep")]
         public static extern void SpaceStep(IntPtr space, double dt);
@@ -1263,6 +1431,10 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpaceUseSpatialHash")]
         public static extern void SpaceUseSpatialHash(IntPtr space, double dim, int count);
 
+        // CP_EXPORT void cpSpatialIndexCollideStatic(cpSpatialIndex *dynamicIndex, cpSpatialIndex *staticIndex, cpSpatialIndexQueryFunc func, void *data);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpatialIndexCollideStatic")]
+        public static extern void SpatialIndexCollideStatic(IntPtr dynamicIndex, IntPtr staticIndex, IntPtr func, IntPtr data);
+
         // CP_EXPORT void cpSpatialIndexFree(cpSpatialIndex *index);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSpatialIndexFree")]
         public static extern void SpatialIndexFree(IntPtr index);
@@ -1270,6 +1442,14 @@ namespace Chipmonk.CApi {
         // CP_EXPORT cpSweep1D* cpSweep1DAlloc(void);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSweep1DAlloc")]
         public static extern IntPtr Sweep1DAlloc();
+
+        // CP_EXPORT cpSpatialIndex* cpSweep1DInit(cpSweep1D *sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSweep1DInit")]
+        public static extern IntPtr Sweep1DInit(IntPtr sweep, IntPtr bbfunc, IntPtr staticIndex);
+
+        // CP_EXPORT cpSpatialIndex* cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+        [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpSweep1DNew")]
+        public static extern IntPtr Sweep1DNew(IntPtr bbfunc, IntPtr staticIndex);
 
     }
 }

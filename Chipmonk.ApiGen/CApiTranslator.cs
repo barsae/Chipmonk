@@ -84,13 +84,18 @@ namespace Chipmonk.ApiGen {
             { "cpFloat", "double" },
             { "cpBool", "bool" },
             { "const int", "int" },
-            { "unsigned long", "UInt64" },
+            { "unsigned long", "ulong" },
             { "cpVect", "Vect" },
             { "const cpVect", "Vect" },
             { "cpBB", "BB" },
             { "const cpBB", "BB" },
             { "cpDataPointer", "IntPtr" },
-            { "cpBodyType", "BodyType" }
+            { "cpBodyType", "BodyType" },
+            { "cpTransform", "Transform" },
+            { "cpCollisionType", "uint" },
+            { "cpContactPointSet", "ContactPointSet" },
+            { "cpShapeFilter", "ShapeFilter" },
+            { "cpTimestamp", "uint" }
         };
 
         private static string ConvertType(string returnType) {
@@ -99,6 +104,8 @@ namespace Chipmonk.ApiGen {
             } else if (remapTypes.ContainsKey(returnType)) {
                 return remapTypes[returnType];
             } else if (returnType.EndsWith("*")) {
+                return "IntPtr";
+            } else if (returnType.EndsWith("Func")) {
                 return "IntPtr";
             } else {
                 throw new SkipExportingFunction("Don't know how to convert type: " + returnType);
