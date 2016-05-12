@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chipmonk.Test.Coverage {
     [TestClass]
-    public class EnsureCoverage {
+    public class EnsureCApiCoverage {
         public const string C_API_TEST_PATH = @"..\..\CApi";
         public const string C_API_FILE = @"..\..\..\Chipmonk\CApi\CP.cs";
 

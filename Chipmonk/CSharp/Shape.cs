@@ -6,7 +6,11 @@ namespace Chipmonk.CSharp {
     public class Shape {
         public IntPtr Handle { get; set; }
 
-        public Shape(IntPtr handle) {
+        internal Shape() {
+            // Child class must set Handle, or bad things will happen
+        }
+
+        internal Shape(IntPtr handle) {
             Handle = handle;
         }
 
@@ -14,11 +18,11 @@ namespace Chipmonk.CSharp {
             return CP.ShapeCacheBB(Handle);
         }
 
-        public void Destroy() {
+        public virtual void Destroy() {
             CP.ShapeDestroy(Handle);
         }
 
-        public void Free() {
+        public virtual void Free() {
             CP.ShapeFree(Handle);
         }
 
@@ -113,6 +117,5 @@ namespace Chipmonk.CSharp {
         public void SetUserData(IntPtr userData) {
             CP.ShapeSetUserData(Handle, userData);
         }
-
     }
 }

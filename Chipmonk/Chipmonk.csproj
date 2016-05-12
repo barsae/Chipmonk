@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Chipmonk</RootNamespace>
     <AssemblyName>Chipmonk</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,7 @@
     <Compile Include="CApi\Vect.cs" />
     <Compile Include="CSharp\Arbiter.cs" />
     <Compile Include="CSharp\BBTree.cs" />
+    <Compile Include="CSharp\BoxShape.cs" />
     <Compile Include="CSharp\Body.cs" />
     <Compile Include="CSharp\CircleShape.cs" />
     <Compile Include="CSharp\Constraint.cs" />
@@ -70,11 +72,13 @@
     <Compile Include="CSharp\SimpleMotor.cs" />
     <Compile Include="CSharp\SlideJoint.cs" />
     <Compile Include="CSharp\Space.cs" />
+    <Compile Include="CSharp\KinematicBody.cs" />
+    <Compile Include="CSharp\StaticBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="chipmunk.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="chipmunk.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

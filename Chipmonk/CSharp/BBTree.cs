@@ -4,19 +4,19 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class BBTree {
-        public IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; set; }
 
-        public BBTree(IntPtr handle) {
-            Handle = handle;
+        public BBTree() {
+            throw new NotImplementedException();
+            //Handle = CP.BBTreeNew(null, null);
         }
 
-        public static BBTree Alloc() {
-            return new BBTree(CP.BBTreeAlloc());
+        internal BBTree(IntPtr handle) {
+            Handle = handle;
         }
 
         public static void Optimize(IntPtr index) {
             CP.BBTreeOptimize(index);
         }
-
     }
 }

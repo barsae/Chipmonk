@@ -11,7 +11,7 @@ namespace Chipmonk.CSharp {
             return new PolylineSet(CP.PolylineConvexDecomposition(Handle, tol));
         }
 
-        public void Free() {
+        public override void Free() {
             CP.PolylineFree(Handle);
         }
 

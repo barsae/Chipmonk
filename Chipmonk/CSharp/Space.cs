@@ -10,7 +10,7 @@ namespace Chipmonk.CSharp {
             Handle = CP.SpaceNew();
         }
 
-        public Space(IntPtr handle) {
+        internal Space(IntPtr handle) {
             Handle = handle;
         }
 

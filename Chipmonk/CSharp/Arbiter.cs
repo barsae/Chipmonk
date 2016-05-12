@@ -4,12 +4,75 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Arbiter {
-        public IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; set; }
 
-        public Arbiter(IntPtr handle) {
+        #region Properties
+        public int Count {
+            get {
+                return CP.ArbiterGetCount(Handle);
+            }
+        }
+
+        public double Friction {
+            get {
+                return CP.ArbiterGetFriction(Handle);
+            }
+            set {
+                CP.ArbiterSetFriction(Handle, value);
+            }
+        }
+
+        public Vect Normal {
+            get {
+                return CP.ArbiterGetNormal(Handle);
+            }
+        }
+
+        public double Restitution {
+            get {
+                return CP.ArbiterGetRestitution(Handle);
+            }
+            set {
+                CP.ArbiterSetRestitution(Handle, value);
+            }
+        }
+
+        public Vect SurfaceVelocity {
+            get {
+                return CP.ArbiterGetSurfaceVelocity(Handle);
+            }
+            set {
+                CP.ArbiterSetSurfaceVelocity(Handle, value);
+            }
+        }
+
+        public IntPtr UserData {
+            get {
+                return CP.ArbiterGetUserData(Handle);
+            }
+            set {
+                CP.ArbiterSetUserData(Handle, value);
+            }
+        }
+
+        public Vect TotalImpulse {
+            get {
+                return CP.ArbiterTotalImpulse(Handle);
+            }
+        }
+
+        public double TotalKE {
+            get {
+                return CP.ArbiterTotalKE(Handle);
+            }
+        }
+        #endregion Properties
+
+        internal Arbiter(IntPtr handle) {
             Handle = handle;
         }
 
+        #region Methods
         public bool CallWildcardBeginA(Space space) {
             return CP.ArbiterCallWildcardBeginA(Handle, space.Handle);
         }
@@ -46,20 +109,8 @@ namespace Chipmonk.CSharp {
             CP.ArbiterGetBodies(Handle, a, b);
         }
 
-        public int GetCount() {
-            return CP.ArbiterGetCount(Handle);
-        }
-
         public double GetDepth(int i) {
             return CP.ArbiterGetDepth(Handle, i);
-        }
-
-        public double GetFriction() {
-            return CP.ArbiterGetFriction(Handle);
-        }
-
-        public Vect GetNormal() {
-            return CP.ArbiterGetNormal(Handle);
         }
 
         public Vect GetPointA(int i) {
@@ -70,20 +121,8 @@ namespace Chipmonk.CSharp {
             return CP.ArbiterGetPointB(Handle, i);
         }
 
-        public double GetRestitution() {
-            return CP.ArbiterGetRestitution(Handle);
-        }
-
         public void GetShapes(IntPtr a, IntPtr b) {
             CP.ArbiterGetShapes(Handle, a, b);
-        }
-
-        public Vect GetSurfaceVelocity() {
-            return CP.ArbiterGetSurfaceVelocity(Handle);
-        }
-
-        public IntPtr GetUserData() {
-            return CP.ArbiterGetUserData(Handle);
         }
 
         public bool Ignore() {
@@ -101,30 +140,6 @@ namespace Chipmonk.CSharp {
         public void SetContactPointSet(IntPtr set) {
             CP.ArbiterSetContactPointSet(Handle, set);
         }
-
-        public void SetFriction(double friction) {
-            CP.ArbiterSetFriction(Handle, friction);
-        }
-
-        public void SetRestitution(double restitution) {
-            CP.ArbiterSetRestitution(Handle, restitution);
-        }
-
-        public void SetSurfaceVelocity(Vect vr) {
-            CP.ArbiterSetSurfaceVelocity(Handle, vr);
-        }
-
-        public void SetUserData(IntPtr userData) {
-            CP.ArbiterSetUserData(Handle, userData);
-        }
-
-        public Vect TotalImpulse() {
-            return CP.ArbiterTotalImpulse(Handle);
-        }
-
-        public double TotalKE() {
-            return CP.ArbiterTotalKE(Handle);
-        }
-
+        #endregion Methods
     }
 }
