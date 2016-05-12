@@ -4,63 +4,52 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class DampedSpring : Constraint {
-        public DampedSpring(Body a, Body b, Vect anchorA, Vect anchorB, double restLength, double stiffness, double damping) : base(CP.DampedSpringNew(a.Handle, b.Handle, anchorA, anchorB, restLength, stiffness, damping)) {
+        #region Properties
+        public Vect AnchorA {
+            get {
+                return CP.DampedSpringGetAnchorA(Handle);
+            }
         }
 
-        public DampedSpring(IntPtr handle) : base(handle) {
+        public Vect AnchorB {
+            get {
+                return CP.DampedSpringGetAnchorB(Handle);
+            }
+            set {
+                CP.DampedSpringSetAnchorB(Handle, value);
+            }
         }
 
-        public static DampedSpring Alloc() {
-            return new DampedSpring(CP.DampedSpringAlloc());
+        public double Damping {
+            get {
+                return CP.DampedSpringGetDamping(Handle);
+            }
+            set {
+                CP.DampedSpringGetDamping(Handle);
+            }
         }
 
-        public Vect GetAnchorA() {
-            return CP.DampedSpringGetAnchorA(Handle);
+        public double RestLength {
+            get {
+                return CP.DampedSpringGetRestLength(Handle);
+            }
+            set {
+                CP.DampedSpringSetRestLength(Handle, value);
+            }
         }
 
-        public Vect GetAnchorB() {
-            return CP.DampedSpringGetAnchorB(Handle);
+        public double Stiffness {
+            get {
+                return CP.DampedSpringGetStiffness(Handle);
+            }
+            set {
+                CP.DampedSpringSetStiffness(Handle, value);
+            }
         }
+        #endregion Properties
 
-        public double GetDamping() {
-            return CP.DampedSpringGetDamping(Handle);
+        public DampedSpring(Body a, Body b, Vect anchorA, Vect anchorB, double restLength, double stiffness, double damping) {
+            Handle = CP.DampedSpringNew(a.Handle, b.Handle, anchorA, anchorB, restLength, stiffness, damping);
         }
-
-        public double GetRestLength() {
-            return CP.DampedSpringGetRestLength(Handle);
-        }
-
-        public double GetStiffness() {
-            return CP.DampedSpringGetStiffness(Handle);
-        }
-
-        public DampedSpring Init(Body a, Body b, Vect anchorA, Vect anchorB, double restLength, double stiffness, double damping) {
-            return new DampedSpring(CP.DampedSpringInit(Handle, a.Handle, b.Handle, anchorA, anchorB, restLength, stiffness, damping));
-        }
-
-        public static Constraint New(Body a, Body b, Vect anchorA, Vect anchorB, double restLength, double stiffness, double damping) {
-            return new Constraint(CP.DampedSpringNew(a.Handle, b.Handle, anchorA, anchorB, restLength, stiffness, damping));
-        }
-
-        public void SetAnchorA(Vect anchorA) {
-            CP.DampedSpringSetAnchorA(Handle, anchorA);
-        }
-
-        public void SetAnchorB(Vect anchorB) {
-            CP.DampedSpringSetAnchorB(Handle, anchorB);
-        }
-
-        public void SetDamping(double damping) {
-            CP.DampedSpringSetDamping(Handle, damping);
-        }
-
-        public void SetRestLength(double restLength) {
-            CP.DampedSpringSetRestLength(Handle, restLength);
-        }
-
-        public void SetStiffness(double stiffness) {
-            CP.DampedSpringSetStiffness(Handle, stiffness);
-        }
-
     }
 }

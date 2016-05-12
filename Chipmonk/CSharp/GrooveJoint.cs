@@ -4,47 +4,37 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class GrooveJoint : Constraint {
-        public GrooveJoint(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) : base(CP.GrooveJointNew(a.Handle, b.Handle, groove_a, groove_b, anchorB)) {
+        #region Properties
+        public Vect AnchorB {
+            get {
+                return CP.GrooveJointGetAnchorB(Handle);
+            }
+            set {
+                CP.GrooveJointSetAnchorB(Handle, value);
+            }
         }
 
-        public GrooveJoint(IntPtr handle) : base(handle) {
+        public Vect GrooveA {
+            get {
+                return CP.GrooveJointGetGrooveA(Handle);
+            }
+            set {
+                CP.GrooveJointSetGrooveA(Handle, value);
+            }
         }
 
-        public static GrooveJoint Alloc() {
-            return new GrooveJoint(CP.GrooveJointAlloc());
+        public Vect GrooveB {
+            get {
+                return CP.GrooveJointGetGrooveB(Handle);
+            }
+            set {
+                CP.GrooveJointSetGrooveB(Handle, value);
+            }
         }
+        #endregion Properties
 
-        public Vect GetAnchorB() {
-            return CP.GrooveJointGetAnchorB(Handle);
+        public GrooveJoint(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
+            Handle = CP.GrooveJointNew(a.Handle, b.Handle, groove_a, groove_b, anchorB);
         }
-
-        public Vect GetGrooveA() {
-            return CP.GrooveJointGetGrooveA(Handle);
-        }
-
-        public Vect GetGrooveB() {
-            return CP.GrooveJointGetGrooveB(Handle);
-        }
-
-        public GrooveJoint Init(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
-            return new GrooveJoint(CP.GrooveJointInit(Handle, a.Handle, b.Handle, groove_a, groove_b, anchorB));
-        }
-
-        public static Constraint New(Body a, Body b, Vect groove_a, Vect groove_b, Vect anchorB) {
-            return new Constraint(CP.GrooveJointNew(a.Handle, b.Handle, groove_a, groove_b, anchorB));
-        }
-
-        public void SetAnchorB(Vect anchorB) {
-            CP.GrooveJointSetAnchorB(Handle, anchorB);
-        }
-
-        public void SetGrooveA(Vect grooveA) {
-            CP.GrooveJointSetGrooveA(Handle, grooveA);
-        }
-
-        public void SetGrooveB(Vect grooveB) {
-            CP.GrooveJointSetGrooveB(Handle, grooveB);
-        }
-
     }
 }

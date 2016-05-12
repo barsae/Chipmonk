@@ -4,51 +4,50 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class SegmentShape : Shape {
-        public SegmentShape(Body body, Vect a, Vect b, double radius) : base(CP.SegmentShapeNew(body.Handle, a, b, radius)) {
+        public Vect A {
+            get {
+                return _a;
+            }
+            set {
+                _a = value;
+                CP.SegmentShapeSetEndpoints(Handle, _a, _b);
+            }
+        }
+        private Vect _a;
+
+        public Vect B {
+            get {
+                return _b;
+            }
+            set {
+                CP.SegmentShapeSetEndpoints(Handle, _a, _b);
+            }
+        }
+        private Vect _b;
+
+        public Vect Normal {
+            get {
+                return CP.SegmentShapeGetNormal(Handle);
+            }
         }
 
-        public SegmentShape(IntPtr handle) : base(handle) {
+        public double Radius {
+            get {
+                return CP.SegmentShapeGetRadius(Handle);
+            }
+            set {
+                CP.SegmentShapeSetRadius(Handle, value);
+            }
         }
 
-        public static SegmentShape Alloc() {
-            return new SegmentShape(CP.SegmentShapeAlloc());
-        }
-
-        public Vect GetA() {
-            return CP.SegmentShapeGetA(Handle);
-        }
-
-        public Vect GetB() {
-            return CP.SegmentShapeGetB(Handle);
-        }
-
-        public Vect GetNormal() {
-            return CP.SegmentShapeGetNormal(Handle);
-        }
-
-        public double GetRadius() {
-            return CP.SegmentShapeGetRadius(Handle);
-        }
-
-        public SegmentShape Init(Body body, Vect a, Vect b, double radius) {
-            return new SegmentShape(CP.SegmentShapeInit(Handle, body.Handle, a, b, radius));
-        }
-
-        public static Shape New(Body body, Vect a, Vect b, double radius) {
-            return new Shape(CP.SegmentShapeNew(body.Handle, a, b, radius));
-        }
-
-        public void SetEndpoints(Vect a, Vect b) {
-            CP.SegmentShapeSetEndpoints(Handle, a, b);
+        public SegmentShape(Body body, Vect a, Vect b, double radius) {
+            _a = a;
+            _b = b;
+            Handle = CP.SegmentShapeNew(body.Handle, a, b, radius);
         }
 
         public void SetNeighbors(Vect prev, Vect next) {
             CP.SegmentShapeSetNeighbors(Handle, prev, next);
         }
-
-        public void SetRadius(double radius) {
-            CP.SegmentShapeSetRadius(Handle, radius);
-        }
-
     }
 }

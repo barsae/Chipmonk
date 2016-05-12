@@ -3,8 +3,100 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Space {
-        public IntPtr Handle { get; set; }
+    public class Space : IDisposable {
+        internal IntPtr Handle { get; set; }
+
+        #region Properties
+        public double CollisionBias {
+            get {
+                return CP.SpaceGetCollisionBias(Handle);
+            }
+            set {
+                CP.SpaceSetCollisionBias(Handle, value);
+            }
+        }
+
+        public double CollisionSlop {
+            get {
+                return CP.SpaceGetCollisionSlop(Handle);
+            }
+            set {
+                CP.SpaceSetCollisionSlop(Handle, value);
+            }
+        }
+
+        public double CurrentTimeStep {
+            get {
+                return CP.SpaceGetCurrentTimeStep(Handle);
+            }
+        }
+
+        public double Damping {
+            get {
+                return CP.SpaceGetDamping(Handle);
+            }
+            set {
+                CP.SpaceSetDamping(Handle, value);
+            }
+        }
+
+        public Vect Gravity {
+            get {
+                return CP.SpaceGetGravity(Handle);
+            }
+            set {
+                CP.SpaceSetGravity(Handle, value);
+            }
+        }
+
+        public double IdleSpeedThreshold {
+            get {
+                return CP.SpaceGetIdleSpeedThreshold(Handle);
+            }
+            set {
+                CP.SpaceSetIdleSpeedThreshold(Handle, value);
+            }
+        }
+
+        public int Iterations {
+            get {
+                return CP.SpaceGetIterations(Handle);
+            }
+            set {
+                CP.SpaceSetIterations(Handle, value);
+            }
+        }
+
+        public double SleepTimeThreshold {
+            get {
+                return CP.SpaceGetSleepTimeThreshold(Handle);
+            }
+            set {
+                CP.SpaceSetSleepTimeThreshold(Handle, value);
+            }
+        }
+
+        public Body StaticBody {
+            get {
+                return new Body(CP.SpaceGetStaticBody(Handle));
+            }
+        }
+
+        public IntPtr UserData {
+            get {
+                return CP.SpaceGetUserData(Handle);
+            }
+            set {
+                CP.SpaceSetUserData(Handle, value);
+            }
+        }
+
+        public bool IsLocked {
+            get {
+                return CP.SpaceIsLocked(Handle);
+            }
+        }
+        #endregion Properties
 
         public Space() {
             Handle = CP.SpaceNew();
@@ -30,10 +122,6 @@ namespace Chipmonk.CSharp {
             return new Shape(CP.SpaceAddShape(Handle, shape.Handle));
         }
 
-        public static Space Alloc() {
-            return new Space(CP.SpaceAlloc());
-        }
-
         public bool ContainsBody(Body body) {
             return CP.SpaceContainsBody(Handle, body.Handle);
         }
@@ -50,84 +138,16 @@ namespace Chipmonk.CSharp {
             CP.SpaceDebugDraw(Handle, options);
         }
 
-        public void Destroy() {
-            CP.SpaceDestroy(Handle);
-        }
-
-        public void Free() {
+        public void Dispose() {
             CP.SpaceFree(Handle);
         }
 
-        public double GetCollisionBias() {
-            return CP.SpaceGetCollisionBias(Handle);
-        }
-
-        public double GetCollisionSlop() {
-            return CP.SpaceGetCollisionSlop(Handle);
-        }
-
-        public double GetCurrentTimeStep() {
-            return CP.SpaceGetCurrentTimeStep(Handle);
-        }
-
-        public double GetDamping() {
-            return CP.SpaceGetDamping(Handle);
-        }
-
-        public Vect GetGravity() {
-            return CP.SpaceGetGravity(Handle);
-        }
-
-        public double GetIdleSpeedThreshold() {
-            return CP.SpaceGetIdleSpeedThreshold(Handle);
-        }
-
-        public int GetIterations() {
-            return CP.SpaceGetIterations(Handle);
-        }
-
-        public double GetSleepTimeThreshold() {
-            return CP.SpaceGetSleepTimeThreshold(Handle);
-        }
-
-        public Body GetStaticBody() {
-            return new Body(CP.SpaceGetStaticBody(Handle));
-        }
-
-        public IntPtr GetUserData() {
-            return CP.SpaceGetUserData(Handle);
-        }
-
-        public static IntPtr HashAlloc() {
-            return CP.SpaceHashAlloc();
-        }
-
-        public static void HashResize(IntPtr hash, double celldim, int numcells) {
-            CP.SpaceHashResize(hash, celldim, numcells);
-        }
-
-        public void HastySpaceFree() {
-            CP.HastySpaceFree(Handle);
-        }
-
-        public void HastySpaceSetThreads(UInt64 threads) {
+        public void HastySpaceSetThreads(ulong threads) {
             CP.HastySpaceSetThreads(Handle, threads);
         }
 
         public void HastySpaceStep(double dt) {
             CP.HastySpaceStep(Handle, dt);
-        }
-
-        public Space Init() {
-            return new Space(CP.SpaceInit(Handle));
-        }
-
-        public bool IsLocked() {
-            return CP.SpaceIsLocked(Handle);
-        }
-
-        public static Space New() {
-            return new Space(CP.SpaceNew());
         }
 
         public void ReindexShape(Shape shape) {
@@ -154,38 +174,6 @@ namespace Chipmonk.CSharp {
             CP.SpaceRemoveShape(Handle, shape.Handle);
         }
 
-        public void SetCollisionBias(double collisionBias) {
-            CP.SpaceSetCollisionBias(Handle, collisionBias);
-        }
-
-        public void SetCollisionSlop(double collisionSlop) {
-            CP.SpaceSetCollisionSlop(Handle, collisionSlop);
-        }
-
-        public void SetDamping(double damping) {
-            CP.SpaceSetDamping(Handle, damping);
-        }
-
-        public void SetGravity(Vect gravity) {
-            CP.SpaceSetGravity(Handle, gravity);
-        }
-
-        public void SetIdleSpeedThreshold(double idleSpeedThreshold) {
-            CP.SpaceSetIdleSpeedThreshold(Handle, idleSpeedThreshold);
-        }
-
-        public void SetIterations(int iterations) {
-            CP.SpaceSetIterations(Handle, iterations);
-        }
-
-        public void SetSleepTimeThreshold(double sleepTimeThreshold) {
-            CP.SpaceSetSleepTimeThreshold(Handle, sleepTimeThreshold);
-        }
-
-        public void SetUserData(IntPtr userData) {
-            CP.SpaceSetUserData(Handle, userData);
-        }
-
         public void Step(double dt) {
             CP.SpaceStep(Handle, dt);
         }
@@ -193,6 +181,5 @@ namespace Chipmonk.CSharp {
         public void UseSpatialHash(double dim, int count) {
             CP.SpaceUseSpatialHash(Handle, dim, count);
         }
-
     }
 }
