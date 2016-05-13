@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Constraint : IDisposable {
-        public IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; set; }
 
         #region Properties
         public Body BodyA {

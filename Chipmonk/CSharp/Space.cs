@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Space : IDisposable {
-        internal IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; private set; }
 
         #region Properties
         public double CollisionBias {
@@ -110,12 +110,16 @@ namespace Chipmonk.CSharp {
             return new Body(CP.SpaceAddBody(Handle, body.Handle));
         }
 
+        public CollisionHandler AddCollisionHandler(uint a, uint b) {
+            return new CollisionHandler(CP.SpaceAddCollisionHandler(Handle, a, b));
+        }
+
         public Constraint AddConstraint(Constraint constraint) {
             return new Constraint(CP.SpaceAddConstraint(Handle, constraint.Handle));
         }
 
-        public IntPtr AddDefaultCollisionHandler() {
-            return CP.SpaceAddDefaultCollisionHandler(Handle);
+        public CollisionHandler AddDefaultCollisionHandler() {
+            return new CollisionHandler(CP.SpaceAddDefaultCollisionHandler(Handle));
         }
 
         public Shape AddShape(Shape shape) {

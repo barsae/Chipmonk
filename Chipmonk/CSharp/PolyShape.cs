@@ -27,9 +27,9 @@ namespace Chipmonk.CSharp {
         }
         #endregion Properties
 
-        public PolyShape(Body body, int count, Vect[] verts, double radius) {
+        public PolyShape(Body body, Vect[] verts, double radius) {
             var vertsHandle = GCHandle.Alloc(verts, GCHandleType.Pinned);
-            Handle = CP.PolyShapeNewRaw(body.Handle, count, vertsHandle.AddrOfPinnedObject(), radius);
+            Handle = CP.PolyShapeNewRaw(body.Handle, verts.Length, vertsHandle.AddrOfPinnedObject(), radius);
             vertsHandle.Free();
             _verts = verts;
         }

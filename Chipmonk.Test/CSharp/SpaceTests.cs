@@ -35,5 +35,43 @@ namespace Chipmonk.Test.CSharp {
             space.RemoveShape(shape);
             space.RemoveBody(body);
         }
+
+        [TestMethod]
+        public void CS_Space_AddDefaultCollisionHandler_Works() {
+            var space = new Space();
+            var collisionHandler = space.AddDefaultCollisionHandler();
+
+            bool beginFuncWasCalled = false;
+            Body[] collisionBodies = null;
+            collisionHandler.BeginFunc = (arb, collisionSpace, userData) => {
+                beginFuncWasCalled = true;
+                collisionBodies = arb.Bodies;
+                return true;
+            };
+
+            var body1 = new Body(1.0, 1.0);
+            body1.Position = new Vect(-10, 0);
+            body1.Velocity = new Vect(10, 0);
+            var shape1 = new CircleShape(body1, 1.0, Vect.Zero);
+            space.AddBody(body1);
+            space.AddShape(shape1);
+
+            var body2 = new Body(1.0, 1.0);
+            body2.Position = new Vect(10, 0);
+            body2.Velocity = new Vect(-10, 0);
+            var shape2 = new CircleShape(body2, 1.0, Vect.Zero);
+            space.AddBody(body2);
+            space.AddShape(shape2);
+
+            for (int ii = 0; ii < 100; ii++) {
+                space.Step(0.05);
+            }
+
+            Assert.IsTrue(beginFuncWasCalled);
+            Assert.IsNotNull(collisionBodies);
+            Assert.AreEqual(2, collisionBodies.Length);
+            Assert.IsTrue(collisionBodies.Contains(body1));
+            Assert.IsTrue(collisionBodies.Contains(body2));
+        }
     }
 }

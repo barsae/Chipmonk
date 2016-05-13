@@ -4,12 +4,45 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Arbiter {
-        internal IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; private set; }
 
         #region Properties
-        public int Count {
+        public Body[] Bodies {
             get {
-                return CP.ArbiterGetCount(Handle);
+                var handle1 = new int[8];
+                var handle2 = new int[8];
+                var handlePointer1 = GCHandle.Alloc(handle1, GCHandleType.Pinned);
+                var handlePointer2 = GCHandle.Alloc(handle2, GCHandleType.Pinned);
+                CP.ArbiterGetBodies(Handle,
+                                    handlePointer1.AddrOfPinnedObject(),
+                                    handlePointer2.AddrOfPinnedObject());
+
+                var bodies = new Body[] {
+                    new Body((IntPtr)handlePointer1.Target),
+                    new Body((IntPtr)handlePointer2.Target)
+                };
+
+                handlePointer1.Free();
+                handlePointer2.Free();
+
+                return bodies;
+            }
+        }
+
+        public Contact[] Contacts {
+            get {
+                var count = CP.ArbiterGetCount(Handle);
+                var contacts = new Contact[count];
+
+                for (int ii = 0; ii < count; ii++) {
+                    contacts[ii] = new Contact() {
+                        Depth = CP.ArbiterGetDepth(Handle, ii),
+                        PointA = CP.ArbiterGetPointA(Handle, ii),
+                        PointB = CP.ArbiterGetPointB(Handle, ii)
+                    };
+                }
+
+                return contacts;
             }
         }
 
@@ -19,6 +52,18 @@ namespace Chipmonk.CSharp {
             }
             set {
                 CP.ArbiterSetFriction(Handle, value);
+            }
+        }
+
+        public bool IsFirstContact {
+            get {
+                return CP.ArbiterIsFirstContact(Handle);
+            }
+        }
+
+        public bool IsRemoval {
+            get {
+                return CP.ArbiterIsRemoval(Handle);
             }
         }
 
@@ -105,36 +150,12 @@ namespace Chipmonk.CSharp {
             CP.ArbiterCallWildcardSeparateB(Handle, space.Handle);
         }
 
-        public void GetBodies(IntPtr a, IntPtr b) {
-            CP.ArbiterGetBodies(Handle, a, b);
-        }
-
-        public double GetDepth(int i) {
-            return CP.ArbiterGetDepth(Handle, i);
-        }
-
-        public Vect GetPointA(int i) {
-            return CP.ArbiterGetPointA(Handle, i);
-        }
-
-        public Vect GetPointB(int i) {
-            return CP.ArbiterGetPointB(Handle, i);
-        }
-
         public void GetShapes(IntPtr a, IntPtr b) {
             CP.ArbiterGetShapes(Handle, a, b);
         }
 
         public bool Ignore() {
             return CP.ArbiterIgnore(Handle);
-        }
-
-        public bool IsFirstContact() {
-            return CP.ArbiterIsFirstContact(Handle);
-        }
-
-        public bool IsRemoval() {
-            return CP.ArbiterIsRemoval(Handle);
         }
 
         public void SetContactPointSet(IntPtr set) {

@@ -4,7 +4,7 @@ using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
     public class Body : IDisposable {
-        internal IntPtr Handle { get; set; }
+        internal IntPtr Handle { get; private set; }
 
         #region Properties
         public double Angle {
