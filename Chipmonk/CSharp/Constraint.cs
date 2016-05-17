@@ -3,9 +3,7 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Constraint : IDisposable {
-        internal IntPtr Handle { get; set; }
-
+    public class Constraint : ForeignReference, IDisposable {
         #region Properties
         public Body BodyA {
             get {

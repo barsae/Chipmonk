@@ -3,9 +3,7 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Space : IDisposable {
-        internal IntPtr Handle { get; private set; }
-
+    public class Space : ForeignReference, IDisposable {
         #region Properties
         public double CollisionBias {
             get {

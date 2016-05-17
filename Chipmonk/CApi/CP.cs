@@ -37,7 +37,7 @@ namespace Chipmonk.CApi {
 
         // CP_EXPORT void cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody **b);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetBodies")]
-        public static extern void ArbiterGetBodies(IntPtr arb, IntPtr a, IntPtr b);
+        public static extern void ArbiterGetBodies(IntPtr arb, ref IntPtr a, ref IntPtr b);
 
         // CP_EXPORT cpContactPointSet cpArbiterGetContactPointSet(const cpArbiter *arb);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetContactPointSet")]
@@ -831,13 +831,13 @@ namespace Chipmonk.CApi {
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolylineSetCollectSegment")]
         public static extern void PolylineSetCollectSegment(Vect v0, Vect v1, IntPtr lines);
 
-        // CP_EXPORT void cpPolylineSetDestroy(cpPolylineSet *set, cpBool freePolylines);
+        // CP_EXPORT void cpPolylineSetDestroy(cpPolylineSet *set, cpBool FreePolylines);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolylineSetDestroy")]
-        public static extern void PolylineSetDestroy(IntPtr set, bool freePolylines);
+        public static extern void PolylineSetDestroy(IntPtr set, bool FreePolylines);
 
-        // CP_EXPORT void cpPolylineSetFree(cpPolylineSet *set, cpBool freePolylines);
+        // CP_EXPORT void cpPolylineSetFree(cpPolylineSet *set, cpBool FreePolylines);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolylineSetFree")]
-        public static extern void PolylineSetFree(IntPtr set, bool freePolylines);
+        public static extern void PolylineSetFree(IntPtr set, bool FreePolylines);
 
         // CP_EXPORT cpPolylineSet *cpPolylineSetInit(cpPolylineSet *set);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpPolylineSetInit")]

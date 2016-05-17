@@ -3,9 +3,7 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Body : IDisposable {
-        internal IntPtr Handle { get; private set; }
-
+    public class Body : ForeignReference, IDisposable {
         #region Properties
         public double Angle {
             get {

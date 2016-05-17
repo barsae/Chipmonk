@@ -7,8 +7,8 @@ using Chipmonk.ApiGen.Models;
 namespace Chipmonk.ApiGen {
     public static class Program {
         public static void Main(string[] args) {
-            var includeDirectory = @"C:\Users\barsae\Dropbox\code\Chipmunk2D\include\chipmunk";
-            var cApiOutputFile = @"C:\Users\barsae\Dropbox\code\Chipmonk\Chipmonk\CApi\CP.cs";
+            var includeDirectory = @"C:\Users\barsa_000\Dropbox\code\Chipmunk2D\include\chipmunk";
+            var cApiOutputFile = @"C:\Users\barsa_000\Dropbox\code\Chipmonk\Chipmonk\CApi\CP.cs";
 
             var reader = new HeaderFileReader();
             var cApiTranslator = new CApiTranslator();

@@ -3,10 +3,8 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Shape : IDisposable {
+    public class Shape : ForeignReference, IDisposable {
         #region Properties
-        internal IntPtr Handle { get; set; }
-
         public double Area {
             get {
                 return CP.ShapeGetArea(Handle);

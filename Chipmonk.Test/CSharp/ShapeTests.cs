@@ -43,7 +43,7 @@ namespace Chipmonk.Test.CSharp {
         public void CS_BoxShape_NewDispose_Works() {
             var space = new Space();
             var body = new Body(1.0, 1.0);
-            var shape = new BoxShape(2, 2, 0);
+            var shape = new BoxShape(body, 2, 2, 0);
             space.AddBody(body);
             space.AddShape(shape);
             space.Step(1.0);
@@ -56,7 +56,7 @@ namespace Chipmonk.Test.CSharp {
             var space = new Space();
             var body = new Body(1.0, 1.0);
             var bb = new BB(1, 2, 3, 4);
-            var shape = new BoxShape(bb, 0);
+            var shape = new BoxShape(body, bb, 0);
             space.AddBody(body);
             space.AddShape(shape);
             space.Step(1.0);

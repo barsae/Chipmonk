@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Chipmonk.CSharp {
-    public class CollisionHandler {
-        internal IntPtr Handle { get; private set; }
+    public class CollisionHandler : ForeignReference {
         private RawCollisionHandler rawHandler;
         private IntPtr _defaultBeginFunc;
         private IntPtr _defaultPreSolveFunc;
@@ -94,7 +93,7 @@ namespace Chipmonk.CSharp {
             if (BeginFunc != null) {
                 rawHandler.beginFunc = Marshal.GetFunctionPointerForDelegate(
                     new RawDelegates.RawCollisionBeginFunc((arb, space, userData) => {
-                        return BeginFunc(new Arbiter(arb), new Space(space), userData);
+                        return BeginFunc(new Arbiter(arb), new Space(space), userData) ? (byte)1 : (byte)0;
                     }));
             } else {
                 rawHandler.beginFunc = _defaultBeginFunc;
@@ -103,7 +102,7 @@ namespace Chipmonk.CSharp {
             if (PreSolveFunc != null) {
                 rawHandler.preSolveFunc = Marshal.GetFunctionPointerForDelegate(
                     new RawDelegates.RawCollisionPreSolveFunc((arb, space, userData) => {
-                        return PreSolveFunc(new Arbiter(arb), new Space(space), userData);
+                        return PreSolveFunc(new Arbiter(arb), new Space(space), userData) ? (byte)1 : (byte)0;
                     }));
             } else {
                 rawHandler.preSolveFunc = _defaultPreSolveFunc;

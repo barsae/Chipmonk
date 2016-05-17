@@ -3,27 +3,18 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class Arbiter {
-        internal IntPtr Handle { get; private set; }
-
+    public class Arbiter : ForeignReference {
         #region Properties
         public Body[] Bodies {
             get {
-                var handle1 = new int[8];
-                var handle2 = new int[8];
-                var handlePointer1 = GCHandle.Alloc(handle1, GCHandleType.Pinned);
-                var handlePointer2 = GCHandle.Alloc(handle2, GCHandleType.Pinned);
-                CP.ArbiterGetBodies(Handle,
-                                    handlePointer1.AddrOfPinnedObject(),
-                                    handlePointer2.AddrOfPinnedObject());
+                var handle1 = new IntPtr();
+                var handle2 = new IntPtr();
+                CP.ArbiterGetBodies(Handle, ref handle1, ref handle2);
 
                 var bodies = new Body[] {
-                    new Body((IntPtr)handlePointer1.Target),
-                    new Body((IntPtr)handlePointer2.Target)
+                    new Body(handle1),
+                    new Body(handle2)
                 };
-
-                handlePointer1.Free();
-                handlePointer2.Free();
 
                 return bodies;
             }

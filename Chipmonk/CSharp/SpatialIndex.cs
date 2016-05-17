@@ -6,9 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Chipmonk.CSharp {
-    public class SpatialIndex {
-        public IntPtr Handle { get; set; }
-
+    public class SpatialIndex : ForeignReference {
         internal SpatialIndex(IntPtr handle) {
             Handle = handle;
         }

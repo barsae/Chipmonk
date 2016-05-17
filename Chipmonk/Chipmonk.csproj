@@ -60,6 +60,7 @@
     <Compile Include="CSharp\Contact.cs" />
     <Compile Include="CSharp\DampedRotarySpring.cs" />
     <Compile Include="CSharp\DampedSpring.cs" />
+    <Compile Include="CSharp\ForeignReference.cs" />
     <Compile Include="CSharp\GearJoint.cs" />
     <Compile Include="CSharp\GrooveJoint.cs" />
     <Compile Include="CSharp\PinJoint.cs" />
@@ -83,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chipmunk.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="chipmunk.pdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

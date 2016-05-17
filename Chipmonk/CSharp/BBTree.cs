@@ -3,9 +3,7 @@ using System.Runtime.InteropServices;
 using Chipmonk.CApi;
 
 namespace Chipmonk.CSharp {
-    public class BBTree {
-        internal IntPtr Handle { get; private set; }
-
+    public class BBTree : ForeignReference {
         public BBTree(Delegates.SpatialIndexBBFunc bbfunc, SpatialIndex index) {
             var marshaledBBFunc = Marshal.GetFunctionPointerForDelegate(
                     new RawDelegates.SpatialIndexBBFunc((obj) => {
