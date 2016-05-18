@@ -55,7 +55,7 @@
     <Compile Include="CSharp\BoxShape.cs" />
     <Compile Include="CSharp\Body.cs" />
     <Compile Include="CSharp\CircleShape.cs" />
-    <Compile Include="CSharp\CollisionHandler.cs" />
+    <Compile Include="CSharp\CollisionHandlerWrapper.cs" />
     <Compile Include="CSharp\Constraint.cs" />
     <Compile Include="CSharp\Contact.cs" />
     <Compile Include="CSharp\DampedRotarySpring.cs" />
@@ -63,6 +63,7 @@
     <Compile Include="CSharp\ForeignReference.cs" />
     <Compile Include="CSharp\GearJoint.cs" />
     <Compile Include="CSharp\GrooveJoint.cs" />
+    <Compile Include="CSharp\ICollisionHandler.cs" />
     <Compile Include="CSharp\PinJoint.cs" />
     <Compile Include="CSharp\PivotJoint.cs" />
     <Compile Include="CSharp\Polyline.cs" />

@@ -108,16 +108,16 @@ namespace Chipmonk.CSharp {
             return new Body(CP.SpaceAddBody(Handle, body.Handle));
         }
 
-        public CollisionHandler AddCollisionHandler(uint a, uint b) {
-            return new CollisionHandler(CP.SpaceAddCollisionHandler(Handle, a, b));
+        public CollisionHandlerWrapper AddCollisionHandler(uint a, uint b, ICollisionHandler handler) {
+            return new CollisionHandlerWrapper(CP.SpaceAddCollisionHandler(Handle, a, b), handler);
         }
 
         public Constraint AddConstraint(Constraint constraint) {
             return new Constraint(CP.SpaceAddConstraint(Handle, constraint.Handle));
         }
 
-        public CollisionHandler AddDefaultCollisionHandler() {
-            return new CollisionHandler(CP.SpaceAddDefaultCollisionHandler(Handle));
+        public CollisionHandlerWrapper AddDefaultCollisionHandler(ICollisionHandler handler) {
+            return new CollisionHandlerWrapper(CP.SpaceAddDefaultCollisionHandler(Handle), handler);
         }
 
         public Shape AddShape(Shape shape) {

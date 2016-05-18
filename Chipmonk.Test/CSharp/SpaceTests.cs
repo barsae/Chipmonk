@@ -39,15 +39,8 @@ namespace Chipmonk.Test.CSharp {
         [TestMethod]
         public void CS_Space_AddDefaultCollisionHandler_Works() {
             var space = new Space();
-            var collisionHandler = space.AddDefaultCollisionHandler();
-
-            bool beginFuncWasCalled = false;
-            Body[] collisionBodies = null;
-            collisionHandler.BeginFunc = (arb, collisionSpace, userData) => {
-                beginFuncWasCalled = true;
-                collisionBodies = arb.Bodies;
-                return true;
-            };
+            var handler = new TestHandler();
+            var collisionHandler = space.AddDefaultCollisionHandler(handler);
 
             var body1 = new Body(1.0, 1.0);
             body1.Position = new Vect(-10, 0);
@@ -67,11 +60,32 @@ namespace Chipmonk.Test.CSharp {
                 space.Step(0.05);
             }
 
-            Assert.IsTrue(beginFuncWasCalled);
-            Assert.IsNotNull(collisionBodies);
-            Assert.AreEqual(2, collisionBodies.Length);
-            Assert.IsTrue(collisionBodies.Contains(body1));
-            Assert.IsTrue(collisionBodies.Contains(body2));
+            Assert.IsTrue(handler.BeginFuncWasCalled);
+            Assert.IsNotNull(handler.CollisionBodies);
+            Assert.AreEqual(2, handler.CollisionBodies.Length);
+            Assert.IsTrue(handler.CollisionBodies.Contains(body1));
+            Assert.IsTrue(handler.CollisionBodies.Contains(body2));
+        }
+
+        private class TestHandler : ICollisionHandler {
+            public bool BeginFuncWasCalled = false;
+            public Body[] CollisionBodies = null;
+
+            public bool BeginFunc(Arbiter arb, Space space, IntPtr userData) {
+                BeginFuncWasCalled = true;
+                CollisionBodies = arb.Bodies;
+                return true;
+            }
+
+            public void PostSolveFunc(Arbiter arb, Space space, IntPtr userData) {
+            }
+
+            public bool PreSolveFunc(Arbiter arb, Space space, IntPtr userData) {
+                return true;
+            }
+
+            public void SeparateFunc(Arbiter arb, Space space, IntPtr userData) {
+            }
         }
     }
 }
