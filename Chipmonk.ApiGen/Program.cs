@@ -7,6 +7,7 @@ using Chipmonk.ApiGen.Models;
 namespace Chipmonk.ApiGen {
     public static class Program {
         public static void Main(string[] args) {
+            throw new NotImplementedException("Don't run this, you've made manual changes to the result which would be wiped out by this");
             var includeDirectory = @"C:\Users\barsa_000\Dropbox\code\Chipmunk2D\include\chipmunk";
             var cApiOutputFile = @"C:\Users\barsa_000\Dropbox\code\Chipmonk\Chipmonk\CApi\CP.cs";
 
