@@ -80,12 +80,17 @@ namespace Chipmonk.CSharp {
             }
         }
 
-        public IntPtr UserData {
+        public object UserData {
             get {
-                return CP.SpaceGetUserData(Handle);
+                var id = CP.SpaceGetUserData(Handle);
+                return ReferenceManager.Dereference(id);
             }
             set {
-                CP.SpaceSetUserData(Handle, value);
+                var previousId = CP.SpaceGetUserData(Handle);
+                ReferenceManager.DeallocateReference(previousId);
+
+                var newId = ReferenceManager.AllocateReference(value);
+                CP.SpaceSetUserData(Handle, newId);
             }
         }
 

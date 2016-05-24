@@ -45,6 +45,8 @@ namespace Chipmonk.Test.CSharp {
             var body1 = new Body(1.0, 1.0);
             body1.Position = new Vect(-10, 0);
             body1.Velocity = new Vect(10, 0);
+            var userData1 = new object();
+            body1.UserData = userData1;
             var shape1 = new CircleShape(body1, 1.0, Vect.Zero);
             space.AddBody(body1);
             space.AddShape(shape1);
@@ -52,6 +54,8 @@ namespace Chipmonk.Test.CSharp {
             var body2 = new Body(1.0, 1.0);
             body2.Position = new Vect(10, 0);
             body2.Velocity = new Vect(-10, 0);
+            var userData2 = new object();
+            body2.UserData = userData2;
             var shape2 = new CircleShape(body2, 1.0, Vect.Zero);
             space.AddBody(body2);
             space.AddShape(shape2);
@@ -65,6 +69,10 @@ namespace Chipmonk.Test.CSharp {
             Assert.AreEqual(2, handler.CollisionBodies.Length);
             Assert.IsTrue(handler.CollisionBodies.Contains(body1));
             Assert.IsTrue(handler.CollisionBodies.Contains(body2));
+
+            var userData = handler.CollisionBodies.Select(body => body.UserData);
+            Assert.IsTrue(userData.Contains(userData1));
+            Assert.IsTrue(userData.Contains(userData2));
         }
 
         private class TestHandler : ICollisionHandler {
@@ -86,6 +94,15 @@ namespace Chipmonk.Test.CSharp {
 
             public void SeparateFunc(Arbiter arb, Space space, IntPtr userData) {
             }
+        }
+
+        [TestMethod]
+        public void CS_Space_UserDataSetAndGet_Works() {
+            var space = new Space();
+            var userData = new object();
+            space.UserData = userData;
+
+            Assert.AreEqual(userData, space.UserData);
         }
     }
 }

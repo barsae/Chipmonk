@@ -65,12 +65,17 @@ namespace Chipmonk.CSharp {
             }
         }
 
-        public IntPtr UserData {
+        public object UserData {
             get {
-                return CP.ConstraintGetUserData(Handle);
+                var id = CP.ConstraintGetUserData(Handle);
+                return ReferenceManager.Dereference(id);
             }
             set {
-                CP.ConstraintSetUserData(Handle, value);
+                var previousId = CP.ConstraintGetUserData(Handle);
+                ReferenceManager.DeallocateReference(previousId);
+
+                var newId = ReferenceManager.AllocateReference(value);
+                CP.ConstraintSetUserData(Handle, newId);
             }
         }
 

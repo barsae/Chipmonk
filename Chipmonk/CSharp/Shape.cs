@@ -101,12 +101,17 @@ namespace Chipmonk.CSharp {
             }
         }
 
-        public IntPtr UserData {
+        public object UserData {
             get {
-                return CP.ShapeGetUserData(Handle);
+                var id = CP.ShapeGetUserData(Handle);
+                return ReferenceManager.Dereference(id);
             }
             set {
-                CP.ShapeSetUserData(Handle, value);
+                var previousId = CP.ShapeGetUserData(Handle);
+                ReferenceManager.DeallocateReference(previousId);
+
+                var newId = ReferenceManager.AllocateReference(value);
+                CP.ShapeSetUserData(Handle, newId);
             }
         }
         #endregion Properties

@@ -64,6 +64,7 @@
     <Compile Include="CSharp\GearJoint.cs" />
     <Compile Include="CSharp\GrooveJoint.cs" />
     <Compile Include="CSharp\ICollisionHandler.cs" />
+    <Compile Include="CSharp\ReferenceManager.cs" />
     <Compile Include="CSharp\PinJoint.cs" />
     <Compile Include="CSharp\PivotJoint.cs" />
     <Compile Include="CSharp\Polyline.cs" />
