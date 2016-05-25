@@ -73,6 +73,21 @@ namespace Chipmonk.CSharp {
             }
         }
 
+        public Shape[] Shapes {
+            get {
+                var handle1 = new IntPtr();
+                var handle2 = new IntPtr();
+                CP.ArbiterGetShapes(Handle, ref handle1, ref handle2);
+
+                var shapes = new Shape[] {
+                    new Shape(handle1),
+                    new Shape(handle2)
+                };
+
+                return shapes;
+            }
+        }
+
         public Vect SurfaceVelocity {
             get {
                 return CP.ArbiterGetSurfaceVelocity(Handle);
@@ -144,10 +159,6 @@ namespace Chipmonk.CSharp {
 
         public void CallWildcardSeparateB(Space space) {
             CP.ArbiterCallWildcardSeparateB(Handle, space.Handle);
-        }
-
-        public void GetShapes(IntPtr a, IntPtr b) {
-            CP.ArbiterGetShapes(Handle, a, b);
         }
 
         public bool Ignore() {

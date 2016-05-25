@@ -19,6 +19,10 @@ namespace Chipmonk.CSharp {
         }
 
         public static object Dereference(IntPtr id) {
+            if ((int)id == 0) {
+                return null;
+            }
+
             return references[id];
         }
     }

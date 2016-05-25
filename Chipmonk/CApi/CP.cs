@@ -73,7 +73,7 @@ namespace Chipmonk.CApi {
 
         // CP_EXPORT void cpArbiterGetShapes(const cpArbiter *arb, cpShape **a, cpShape **b);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetShapes")]
-        public static extern void ArbiterGetShapes(IntPtr arb, IntPtr a, IntPtr b);
+        public static extern void ArbiterGetShapes(IntPtr arb, ref IntPtr a, ref IntPtr b);
 
         // CP_EXPORT cpVect cpArbiterGetSurfaceVelocity(cpArbiter *arb);
         [DllImport("chipmunk.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "cpArbiterGetSurfaceVelocity")]
