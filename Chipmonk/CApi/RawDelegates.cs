@@ -24,15 +24,28 @@ namespace Chipmonk.CApi {
 
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate BB SpatialIndexBBFunc(IntPtr obj);
+        public delegate BB RawSpatialIndexBBFunc(IntPtr obj);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void SpatialIndexIteratorFunc(IntPtr obj, IntPtr data);
+        public delegate void RawSpatialIndexIteratorFunc(IntPtr obj, IntPtr data);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate uint SpatialIndexQueryFunc(IntPtr obj1, IntPtr obj2, uint id, IntPtr data);
+        public delegate uint RawSpatialIndexQueryFunc(IntPtr obj1, IntPtr obj2, uint id, IntPtr data);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate double SpatialIndexSegmentQueryFunc(IntPtr obj1, IntPtr obj2, IntPtr data);
+        public delegate double RawSpatialIndexSegmentQueryFunc(IntPtr obj1, IntPtr obj2, IntPtr data);
+
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void RawSpacePointQueryFunc(IntPtr shape, Vect point, double distance, Vect gradient, IntPtr data);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void RawSpaceSegmentQueryFunc(IntPtr shape, Vect point, Vect normal, double alpha, IntPtr data);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void RawSpaceBBQueryFunc(IntPtr shape, IntPtr data);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void RawSpaceShapeQueryFunc(IntPtr shape, IntPtr points, IntPtr data);
     }
 }

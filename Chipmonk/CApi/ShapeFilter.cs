@@ -9,5 +9,11 @@ namespace Chipmonk.CApi {
         public uint Group;
         public uint Categories;
         public uint Mask;
+
+        public static ShapeFilter All = new ShapeFilter() {
+            Group = ~((uint)0),
+            Categories = ~((uint)0),
+            Mask = ~((uint)0)
+        };
     }
 }

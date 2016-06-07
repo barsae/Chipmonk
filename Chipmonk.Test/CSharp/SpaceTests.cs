@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Chipmonk.CSharp.Delegates;
 
 namespace Chipmonk.Test.CSharp {
     [TestClass]
@@ -103,6 +104,44 @@ namespace Chipmonk.Test.CSharp {
             space.UserData = userData;
 
             Assert.AreEqual(userData, space.UserData);
+        }
+
+        [TestMethod]
+        public void CS_Space_SegmentQuery_Works() {
+            var space = new Space();
+            var body = new Body(1, 1);
+            var shape = new CircleShape(body, 10, Vect.Zero);
+
+            space.AddBody(body);
+            space.AddShape(shape);
+
+            Shape queriedShape = null;
+            SpaceSegmentQueryFunc func = (queryShape, point, normal, alpha, data) => {
+                queriedShape = queryShape;
+            };
+
+            space.SegmentQuery(new Vect(-100, 0), new Vect(100, 0), 0, ShapeFilter.All, func, null);
+            Assert.AreEqual(shape, queriedShape);
+        }
+
+        [TestMethod]
+        public void CS_Space_ShapeQuery_Works() {
+            var space = new Space();
+            var body1 = new Body(1, 1);
+            var shape1 = new CircleShape(body1, 10, Vect.Zero);
+
+            space.AddBody(body1);
+            space.AddShape(shape1);
+
+            Shape queriedShape = null;
+            SpaceShapeQueryFunc func = (queryShape, points, data) => {
+                queriedShape = queryShape;
+            };
+
+            var body2 = new Body(0, 0);
+            var shape2 = new CircleShape(body2, 1, Vect.Zero);
+            space.ShapeQuery(shape2, func, null);
+            Assert.AreEqual(shape1, queriedShape);
         }
     }
 }

@@ -77,7 +77,6 @@
     <Compile Include="CSharp\Shape.cs" />
     <Compile Include="CSharp\SimpleMotor.cs" />
     <Compile Include="CSharp\SlideJoint.cs" />
-    <Compile Include="CSharp\SpaceHash.cs" />
     <Compile Include="CSharp\Space.cs" />
     <Compile Include="CSharp\KinematicBody.cs" />
     <Compile Include="CSharp\SpatialIndex.cs" />

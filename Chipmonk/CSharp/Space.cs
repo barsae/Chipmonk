@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Chipmonk.CApi;
+using static Chipmonk.CSharp.Delegates;
 
 namespace Chipmonk.CSharp {
     public class Space : ForeignReference, IDisposable {
@@ -179,6 +180,24 @@ namespace Chipmonk.CSharp {
 
         public void RemoveShape(Shape shape) {
             CP.SpaceRemoveShape(Handle, shape.Handle);
+        }
+
+        public void SegmentQuery(Vect start, Vect end, double radius, ShapeFilter filter, SpaceSegmentQueryFunc func, object data) {
+            var funcHandle = Marshal.GetFunctionPointerForDelegate(
+                new RawDelegates.RawSpaceSegmentQueryFunc((shape, point, normal, alpha, unused_data) => {
+                    func(new Shape(shape), point, normal, alpha, data);
+                }));
+
+            CP.SpaceSegmentQuery(Handle, start, end, radius, filter, funcHandle, IntPtr.Zero);
+        }
+
+        public void ShapeQuery(Shape shape, SpaceShapeQueryFunc func, object data) {
+            var funcHandle = Marshal.GetFunctionPointerForDelegate(
+                new RawDelegates.RawSpaceShapeQueryFunc((queryShape, points, unused_data) => {
+                    func(new Shape(queryShape), new ContactPointSet(), data);
+                }));
+
+            CP.SpaceShapeQuery(Handle, shape.Handle, funcHandle, IntPtr.Zero);
         }
 
         public void Step(double dt) {
